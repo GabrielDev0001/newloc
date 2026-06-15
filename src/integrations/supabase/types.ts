@@ -19,6 +19,7 @@ export type Database = {
           available: boolean
           category: string
           city: string
+          city_id: string | null
           created_at: string
           description: string | null
           group_code: string
@@ -34,6 +35,7 @@ export type Database = {
           available?: boolean
           category: string
           city?: string
+          city_id?: string | null
           created_at?: string
           description?: string | null
           group_code: string
@@ -49,6 +51,7 @@ export type Database = {
           available?: boolean
           category?: string
           city?: string
+          city_id?: string | null
           created_at?: string
           description?: string | null
           group_code?: string
@@ -58,6 +61,50 @@ export type Database = {
           name?: string
           price_original?: number | null
           price_weekly?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cars_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cities: {
+        Row: {
+          active: boolean
+          address: string | null
+          created_at: string
+          hours: string | null
+          id: string
+          name: string
+          phone: string | null
+          state: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          address?: string | null
+          created_at?: string
+          hours?: string | null
+          id?: string
+          name: string
+          phone?: string | null
+          state?: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          address?: string | null
+          created_at?: string
+          hours?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          state?: string
           updated_at?: string
         }
         Relationships: []

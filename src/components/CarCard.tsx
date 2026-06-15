@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Gauge, MapPin, Car as CarIcon } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { Gauge, MapPin, Car as CarIcon, ArrowRight } from "lucide-react";
 import { buildWhatsappLink } from "@/lib/constants";
 
 export type Car = {
@@ -15,6 +16,7 @@ export type Car = {
   price_original: number | null;
   km_included: number;
   city: string;
+  city_id: string | null;
   available: boolean;
 };
 
@@ -29,7 +31,11 @@ export function CarCard({ car }: { car: Car }) {
 
   return (
     <Card className="group flex flex-col overflow-hidden border-border/60 transition-all hover:-translate-y-1 hover:shadow-card">
-      <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-secondary to-accent">
+      <Link
+        to="/carros/$id"
+        params={{ id: car.id }}
+        className="relative block aspect-[16/10] overflow-hidden bg-gradient-to-br from-secondary to-accent"
+      >
         {car.image_url ? (
           <img
             src={car.image_url}
@@ -45,14 +51,18 @@ export function CarCard({ car }: { car: Car }) {
         <Badge className="absolute left-3 top-3 bg-brand-gradient text-brand-foreground border-0">
           Grupo {car.group_code}
         </Badge>
-      </div>
+      </Link>
 
       <div className="flex flex-1 flex-col gap-4 p-5">
         <div>
           <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
             {car.category}
           </p>
-          <h3 className="mt-1 font-display text-xl font-bold text-foreground">{car.name}</h3>
+          <Link to="/carros/$id" params={{ id: car.id }}>
+            <h3 className="mt-1 font-display text-xl font-bold text-foreground hover:text-brand transition-colors">
+              {car.name}
+            </h3>
+          </Link>
         </div>
 
         {car.description && (
@@ -75,9 +85,16 @@ export function CarCard({ car }: { car: Car }) {
           </p>
         </div>
 
-        <Button asChild className="bg-brand-gradient text-brand-foreground hover:opacity-95">
-          <a href={link} target="_blank" rel="noopener noreferrer">Reservar pelo WhatsApp</a>
-        </Button>
+        <div className="grid grid-cols-2 gap-2">
+          <Button asChild variant="outline">
+            <Link to="/carros/$id" params={{ id: car.id }}>
+              Detalhes <ArrowRight className="ml-1 h-4 w-4" />
+            </Link>
+          </Button>
+          <Button asChild className="bg-brand-gradient text-brand-foreground hover:opacity-95">
+            <a href={link} target="_blank" rel="noopener noreferrer">Reservar</a>
+          </Button>
+        </div>
       </div>
     </Card>
   );

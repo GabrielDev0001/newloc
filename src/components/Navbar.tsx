@@ -20,11 +20,11 @@ export function Navbar() {
           </span>
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
-          <a href="#carros" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Carros</a>
-          <a href="#beneficios" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Benefícios</a>
-          <a href="#como-funciona" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Como funciona</a>
-          <a href="#faq" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Dúvidas</a>
+        <div className="hidden items-center gap-6 md:flex">
+          <Link to="/" hash="carros" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Carros</Link>
+          <Link to="/como-funciona" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Como funciona</Link>
+          <Link to="/sobre" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Sobre</Link>
+          <Link to="/" hash="faq" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Dúvidas</Link>
         </div>
 
         <div className="flex items-center gap-2">

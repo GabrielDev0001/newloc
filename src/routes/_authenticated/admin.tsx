@@ -15,7 +15,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import type { Car as CarType } from "@/components/CarCard";
-import { Pencil, Trash2, Plus, ArrowLeft, Loader2, Upload, Building2 } from "lucide-react";
+import { Pencil, Trash2, Plus, ArrowLeft, Loader2, Upload, Building2, Inbox } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Painel — Newloc" }] }),
@@ -23,12 +23,12 @@ export const Route = createFileRoute("/_authenticated/admin")({
 });
 
 type City = { id: string; name: string; state: string };
-type FormState = Partial<CarType>;
+type FormState = Partial<CarType> & { segment?: string };
 
 const empty: FormState = {
   name: "", group_code: "", category: "Hatch", description: "", image_url: "",
   price_weekly: 0, price_original: null, km_included: 750, city: "São Paulo",
-  city_id: null, available: true,
+  city_id: null, available: true, segment: "aplicativo",
 };
 
 function AdminPage() {
@@ -100,6 +100,7 @@ function AdminPage() {
       city: selectedCity?.name ?? editing.city ?? "São Paulo",
       city_id: editing.city_id ?? null,
       available: editing.available ?? true,
+      segment: editing.segment ?? "aplicativo",
     };
     const { error } = editing.id
       ? await supabase.from("cars").update(payload).eq("id", editing.id)
@@ -134,6 +135,7 @@ function AdminPage() {
             <h1 className="font-display text-xl font-bold">Painel — Carros</h1>
           </div>
           <div className="flex items-center gap-2">
+            <Button asChild variant="outline" size="sm"><Link to="/admin/propostas"><Inbox className="mr-2 h-4 w-4" />Propostas</Link></Button>
             <Button asChild variant="outline" size="sm"><Link to="/admin/cidades"><Building2 className="mr-2 h-4 w-4" />Cidades</Link></Button>
             <Dialog open={open} onOpenChange={(o) => { setOpen(o); if (!o) setEditing(empty); }}>
               <DialogTrigger asChild>
@@ -160,6 +162,15 @@ function AdminPage() {
                         <SelectTrigger><SelectValue placeholder="Selecione" /></SelectTrigger>
                         <SelectContent>
                           {cities?.map((c) => <SelectItem key={c.id} value={c.id}>{c.name} — {c.state}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div><Label>Segmento *</Label>
+                      <Select value={editing.segment ?? "aplicativo"} onValueChange={(v) => setEditing({ ...editing, segment: v })}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="aplicativo">Aplicativo</SelectItem>
+                          <SelectItem value="assinatura">Assinatura</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -219,6 +230,7 @@ function AdminPage() {
                 <TableRow>
                   <TableHead>Carro</TableHead>
                   <TableHead>Grupo</TableHead>
+                  <TableHead>Segmento</TableHead>
                   <TableHead>Cidade</TableHead>
                   <TableHead>Preço/sem</TableHead>
                   <TableHead>Status</TableHead>
@@ -230,6 +242,7 @@ function AdminPage() {
                   <TableRow key={c.id}>
                     <TableCell className="font-medium">{c.name}<div className="text-xs text-muted-foreground">{c.category}</div></TableCell>
                     <TableCell><Badge variant="outline">{c.group_code}</Badge></TableCell>
+                    <TableCell><Badge variant={c.segment === "assinatura" ? "secondary" : "default"}>{c.segment ?? "aplicativo"}</Badge></TableCell>
                     <TableCell>{c.city}</TableCell>
                     <TableCell className="font-mono">R$ {Number(c.price_weekly).toFixed(2)}</TableCell>
                     <TableCell>{c.available ? <Badge className="bg-green-100 text-green-700 hover:bg-green-100">Disponível</Badge> : <Badge variant="secondary">Indisponível</Badge>}</TableCell>

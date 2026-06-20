@@ -18,6 +18,7 @@ export type Car = {
   city: string;
   city_id: string | null;
   available: boolean;
+  segment?: string;
 };
 
 const brl = (v: number) =>

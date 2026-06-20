@@ -29,6 +29,7 @@ export type Database = {
           name: string
           price_original: number | null
           price_weekly: number
+          segment: string
           updated_at: string
         }
         Insert: {
@@ -45,6 +46,7 @@ export type Database = {
           name: string
           price_original?: number | null
           price_weekly: number
+          segment?: string
           updated_at?: string
         }
         Update: {
@@ -61,6 +63,7 @@ export type Database = {
           name?: string
           price_original?: number | null
           price_weekly?: number
+          segment?: string
           updated_at?: string
         }
         Relationships: [
@@ -109,6 +112,57 @@ export type Database = {
         }
         Relationships: []
       }
+      fleet_proposals: {
+        Row: {
+          category: string | null
+          city: string | null
+          cnpj: string | null
+          company_name: string
+          contact_name: string
+          created_at: string
+          email: string
+          id: string
+          message: string | null
+          phone: string
+          status: string
+          term_months: number | null
+          updated_at: string
+          vehicle_count: number
+        }
+        Insert: {
+          category?: string | null
+          city?: string | null
+          cnpj?: string | null
+          company_name: string
+          contact_name: string
+          created_at?: string
+          email: string
+          id?: string
+          message?: string | null
+          phone: string
+          status?: string
+          term_months?: number | null
+          updated_at?: string
+          vehicle_count?: number
+        }
+        Update: {
+          category?: string | null
+          city?: string | null
+          cnpj?: string | null
+          company_name?: string
+          contact_name?: string
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string | null
+          phone?: string
+          status?: string
+          term_months?: number | null
+          updated_at?: string
+          vehicle_count?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -129,6 +183,59 @@ export type Database = {
           id?: string
         }
         Relationships: []
+      }
+      subscription_leads: {
+        Row: {
+          car_id: string | null
+          city: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          message: string | null
+          not_for_app_acknowledged: boolean
+          phone: string
+          status: string
+          term_months: number | null
+          updated_at: string
+        }
+        Insert: {
+          car_id?: string | null
+          city?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          message?: string | null
+          not_for_app_acknowledged?: boolean
+          phone: string
+          status?: string
+          term_months?: number | null
+          updated_at?: string
+        }
+        Update: {
+          car_id?: string | null
+          city?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string | null
+          not_for_app_acknowledged?: boolean
+          phone?: string
+          status?: string
+          term_months?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscription_leads_car_id_fkey"
+            columns: ["car_id"]
+            isOneToOne: false
+            referencedRelation: "cars"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {

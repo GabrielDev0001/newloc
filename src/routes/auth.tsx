@@ -88,9 +88,6 @@ function AuthPage() {
               <Button type="submit" disabled={loading} className="w-full bg-brand-gradient text-brand-foreground">
                 {loading ? "Criando..." : "Criar conta"}
               </Button>
-              <p className="text-center text-xs text-muted-foreground">
-                O primeiro usuário cadastrado vira administrador automaticamente.
-              </p>
             </form>
           </TabsContent>
         </Tabs>

@@ -6,45 +6,42 @@ export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [roleLoading, setRoleLoading] = useState(true);
 
   useEffect(() => {
+    async function loadRole(uid: string | null) {
+      if (!uid) {
+        setIsAdmin(false);
+        setRoleLoading(false);
+        return;
+      }
+      setRoleLoading(true);
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", uid)
+        .eq("role", "admin")
+        .maybeSingle();
+      setIsAdmin(!!data);
+      setRoleLoading(false);
+    }
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
       setUser(s?.user ?? null);
-      if (s?.user) {
-        // defer role lookup
-        setTimeout(() => {
-          supabase
-            .from("user_roles")
-            .select("role")
-            .eq("user_id", s.user.id)
-            .eq("role", "admin")
-            .maybeSingle()
-            .then(({ data }) => setIsAdmin(!!data));
-        }, 0);
-      } else {
-        setIsAdmin(false);
-      }
+      setTimeout(() => loadRole(s?.user?.id ?? null), 0);
     });
 
     supabase.auth.getSession().then(({ data: { session: s } }) => {
       setSession(s);
       setUser(s?.user ?? null);
-      setLoading(false);
-      if (s?.user) {
-        supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", s.user.id)
-          .eq("role", "admin")
-          .maybeSingle()
-          .then(({ data }) => setIsAdmin(!!data));
-      }
+      setAuthLoading(false);
+      loadRole(s?.user?.id ?? null);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  return { session, user, isAdmin, loading };
+  return { session, user, isAdmin, loading: authLoading || roleLoading };
 }

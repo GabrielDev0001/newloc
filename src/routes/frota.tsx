@@ -193,10 +193,8 @@ function FrotaPage() {
                         <Label htmlFor="term_months">Prazo (meses)</Label>
                         <Input id="term_months" type="number" min={1} max={120} value={form.term_months} onChange={(e) => set("term_months", e.target.value)} placeholder="12, 24, 36..." />
                       </div>
-                      <div>
-                        <Label htmlFor="city">Cidade</Label>
-                        <Input id="city" maxLength={80} value={form.city} onChange={(e) => set("city", e.target.value)} />
-                      </div>
+
+
                     </div>
                     <div>
                       <Label htmlFor="message">Observações</Label>

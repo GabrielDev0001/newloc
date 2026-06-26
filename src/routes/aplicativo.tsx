@@ -74,16 +74,7 @@ function AplicativoPage() {
 
         <section className="py-14">
           <div className="container mx-auto px-4">
-            <div className="mb-8 grid gap-3 sm:grid-cols-2 lg:max-w-xl">
-              <Select value={cityId} onValueChange={setCityId}>
-                <SelectTrigger><SelectValue placeholder="Cidade" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Todas as cidades</SelectItem>
-                  {cities?.map((c) => (
-                    <SelectItem key={c.id} value={c.id}>{c.name} — {c.state}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div className="mb-8 lg:max-w-xs">
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger><SelectValue placeholder="Categoria" /></SelectTrigger>
                 <SelectContent>
@@ -108,8 +99,9 @@ function AplicativoPage() {
             ) : (
               <div className="rounded-2xl border border-dashed border-border bg-secondary/40 p-12 text-center">
                 <p className="text-muted-foreground">Nenhum carro encontrado com esses filtros.</p>
-                {(cityId !== "all" || category !== "all") && (
-                  <Button variant="ghost" className="mt-4" onClick={() => { setCityId("all"); setCategory("all"); }}>
+                {category !== "all" && (
+                  <Button variant="ghost" className="mt-4" onClick={() => setCategory("all")}>
+
                     Limpar filtros
                   </Button>
                 )}

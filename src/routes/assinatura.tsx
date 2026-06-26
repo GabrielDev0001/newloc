@@ -203,10 +203,8 @@ function AssinaturaPage() {
                         <Label htmlFor="phone">Telefone *</Label>
                         <Input id="phone" required maxLength={20} value={form.phone} onChange={(e) => set("phone", e.target.value)} />
                       </div>
-                      <div>
-                        <Label htmlFor="city">Cidade</Label>
-                        <Input id="city" maxLength={80} value={form.city} onChange={(e) => set("city", e.target.value)} />
-                      </div>
+
+
                       <div>
                         <Label>Prazo desejado (meses)</Label>
                         <Select value={form.term_months || undefined} onValueChange={(v) => set("term_months", v)}>

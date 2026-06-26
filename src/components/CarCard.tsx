@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "@tanstack/react-router";
-import { Gauge, MapPin, Car as CarIcon, ArrowRight } from "lucide-react";
+import { Gauge, Car as CarIcon, ArrowRight } from "lucide-react";
 import { buildWhatsappLink } from "@/lib/constants";
 
 export type Car = {

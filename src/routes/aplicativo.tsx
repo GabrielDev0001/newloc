@@ -22,20 +22,10 @@ export const Route = createFileRoute("/aplicativo")({
   component: AplicativoPage,
 });
 
-type City = { id: string; name: string; state: string };
+
 
 function AplicativoPage() {
-  const [cityId, setCityId] = useState<string>("all");
   const [category, setCategory] = useState<string>("all");
-
-  const { data: cities } = useQuery({
-    queryKey: ["public-cities"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("cities").select("id,name,state").eq("active", true).order("name");
-      if (error) throw error;
-      return data as City[];
-    },
-  });
 
   const { data: cars, isLoading } = useQuery({
     queryKey: ["public-cars", "aplicativo"],
@@ -58,11 +48,11 @@ function AplicativoPage() {
 
   const filtered = useMemo(() => {
     return (cars ?? []).filter((c) => {
-      if (cityId !== "all" && c.city_id !== cityId) return false;
       if (category !== "all" && c.category !== category) return false;
       return true;
     });
-  }, [cars, cityId, category]);
+  }, [cars, category]);
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -84,16 +74,7 @@ function AplicativoPage() {
 
         <section className="py-14">
           <div className="container mx-auto px-4">
-            <div className="mb-8 grid gap-3 sm:grid-cols-2 lg:max-w-xl">
-              <Select value={cityId} onValueChange={setCityId}>
-                <SelectTrigger><SelectValue placeholder="Cidade" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Todas as cidades</SelectItem>
-                  {cities?.map((c) => (
-                    <SelectItem key={c.id} value={c.id}>{c.name} — {c.state}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div className="mb-8 lg:max-w-xs">
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger><SelectValue placeholder="Categoria" /></SelectTrigger>
                 <SelectContent>
@@ -118,10 +99,12 @@ function AplicativoPage() {
             ) : (
               <div className="rounded-2xl border border-dashed border-border bg-secondary/40 p-12 text-center">
                 <p className="text-muted-foreground">Nenhum carro encontrado com esses filtros.</p>
-                {(cityId !== "all" || category !== "all") && (
-                  <Button variant="ghost" className="mt-4" onClick={() => { setCityId("all"); setCategory("all"); }}>
-                    Limpar filtros
+                {category !== "all" && (
+                  <Button variant="ghost" className="mt-4" onClick={() => setCategory("all")}>
+
+                    Limpar filtro
                   </Button>
+
                 )}
                 <div className="mt-6">
                   <Button asChild>

@@ -25,17 +25,7 @@ export const Route = createFileRoute("/aplicativo")({
 type City = { id: string; name: string; state: string };
 
 function AplicativoPage() {
-  const [cityId, setCityId] = useState<string>("all");
   const [category, setCategory] = useState<string>("all");
-
-  const { data: cities } = useQuery({
-    queryKey: ["public-cities"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("cities").select("id,name,state").eq("active", true).order("name");
-      if (error) throw error;
-      return data as City[];
-    },
-  });
 
   const { data: cars, isLoading } = useQuery({
     queryKey: ["public-cars", "aplicativo"],
@@ -58,11 +48,11 @@ function AplicativoPage() {
 
   const filtered = useMemo(() => {
     return (cars ?? []).filter((c) => {
-      if (cityId !== "all" && c.city_id !== cityId) return false;
       if (category !== "all" && c.category !== category) return false;
       return true;
     });
-  }, [cars, cityId, category]);
+  }, [cars, category]);
+
 
   return (
     <div className="min-h-screen bg-background">

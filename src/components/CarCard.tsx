@@ -72,8 +72,8 @@ export function CarCard({ car }: { car: Car }) {
 
         <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
           <span className="inline-flex items-center gap-1"><Gauge className="h-3.5 w-3.5" />{car.km_included} km/sem</span>
-          <span className="inline-flex items-center gap-1"><MapPin className="h-3.5 w-3.5" />{car.city}</span>
         </div>
+
 
         <div className="mt-auto rounded-lg bg-secondary p-4">
           {hasDiscount && (

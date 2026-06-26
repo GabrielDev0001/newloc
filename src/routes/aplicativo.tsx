@@ -102,8 +102,9 @@ function AplicativoPage() {
                 {category !== "all" && (
                   <Button variant="ghost" className="mt-4" onClick={() => setCategory("all")}>
 
-                    Limpar filtros
+                    Limpar filtro
                   </Button>
+
                 )}
                 <div className="mt-6">
                   <Button asChild>

@@ -22,7 +22,7 @@ export const Route = createFileRoute("/aplicativo")({
   component: AplicativoPage,
 });
 
-type City = { id: string; name: string; state: string };
+
 
 function AplicativoPage() {
   const [category, setCategory] = useState<string>("all");

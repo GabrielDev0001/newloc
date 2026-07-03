@@ -1,10 +1,16 @@
 import { Star, Quote } from "lucide-react";
+import arturAv from "@/assets/avatars/artur.png.asset.json";
+import jacksonAv from "@/assets/avatars/jackson.png.asset.json";
+import joseAv from "@/assets/avatars/jose.png.asset.json";
+import recuperaAv from "@/assets/avatars/recupera.png.asset.json";
+import diogoAv from "@/assets/avatars/diogo.png.asset.json";
+import giovanaAv from "@/assets/avatars/giovana.png.asset.json";
 
 type Review = {
   name: string;
   when: string;
   text: string;
-  avatarSeed: string;
+  avatar: string;
 };
 
 const reviews: Review[] = [
@@ -12,45 +18,40 @@ const reviews: Review[] = [
     name: "Artur L.",
     when: "5 meses atrás",
     text: "Aluguei um carro recentemente, gostei muito da experiência. Me atenderam super bem e o carro estava em ótimas condições, muito top!",
-    avatarSeed: "artur-newloc",
+    avatar: arturAv.url,
   },
   {
     name: "Jackson H.",
     when: "5 meses atrás",
     text: "Já estou a mais de 1 ano alugando carro, zero problemas, pessoal super educados e atenciosos, melhor custo benefício.",
-    avatarSeed: "jackson-newloc",
+    avatar: jacksonAv.url,
   },
   {
     name: "José F.",
     when: "3 meses atrás",
     text: "Nunca tive qualquer tipo de problema. Equipe preparada, veículos novos, limpos e conservados. Indiquei para os meus amigos, que estão satisfeitos.",
-    avatarSeed: "jose-newloc",
+    avatar: joseAv.url,
   },
   {
     name: "Recupera C.",
     when: "4 meses atrás",
     text: "Locadora espetacular, altíssima qualidade, desde o atendimento inicial à entrega do veículo. Veículos extremamente higienizados, empresa super organizada com veículos de alto padrão. Recomendo a todos.",
-    avatarSeed: "recupera-newloc",
+    avatar: recuperaAv.url,
   },
   {
     name: "Diogo S.",
     when: "5 meses atrás",
     text: "Experiência excelente! Carros muito bem cuidados, atendimento ágil e equipe super atenciosa. Com certeza voltarei a alugar.",
-    avatarSeed: "diogo-newloc",
+    avatar: diogoAv.url,
   },
   {
     name: "Giovana S.",
     when: "7 meses atrás",
     text: "Tive a experiência de locar um veículo por diária e não tenho do que reclamar! Do atendimento inicial à locação fui super bem atendida. Sempre minha primeira opção em Belo Horizonte!",
-    avatarSeed: "giovana-newloc",
+    avatar: giovanaAv.url,
   },
 ];
 
-function avatarUrl(seed: string) {
-  return `https://api.dicebear.com/7.x/personas/svg?seed=${encodeURIComponent(seed)}&backgroundType=gradientLinear&backgroundColor=b6e3f4,c0aede,ffd5dc,ffdfbf,d1d4f9`;
-}
-
-// Google "G" logo mark
 function GoogleG({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
@@ -67,11 +68,7 @@ export function Testimonials() {
     <section className="border-t border-border bg-secondary/30 py-20">
       <div className="container mx-auto px-4">
         <div className="mb-12 flex flex-col items-center text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/5 px-4 py-1.5 text-xs font-semibold text-brand">
-            <GoogleG className="h-4 w-4" />
-            Avaliações do Google — nota 5,0
-          </div>
-          <h2 className="mt-5 font-display text-3xl font-bold md:text-4xl">
+          <h2 className="font-display text-3xl font-bold md:text-4xl">
             O que dizem sobre a Newloc
           </h2>
           <p className="mt-3 max-w-xl text-muted-foreground">
@@ -104,7 +101,7 @@ export function Testimonials() {
               <div className="mt-6 flex items-center gap-3 border-t border-border pt-4">
                 <div className="relative">
                   <img
-                    src={avatarUrl(r.avatarSeed)}
+                    src={r.avatar}
                     alt=""
                     loading="lazy"
                     className="h-10 w-10 rounded-full border border-border bg-secondary object-cover"
@@ -113,7 +110,7 @@ export function Testimonials() {
                 </div>
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold text-foreground">
-                    {r.name}
+                    <span className="select-none blur-[3px]">{r.name}</span>
                   </p>
                   <p className="text-xs text-muted-foreground">{r.when} • via Google</p>
                 </div>

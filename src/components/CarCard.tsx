@@ -27,7 +27,7 @@ const brl = (v: number) =>
 export function CarCard({ car }: { car: Car }) {
   const hasDiscount = car.price_original && Number(car.price_original) > Number(car.price_weekly);
   const link = buildWhatsappLink(
-    `Olá! Quero alugar o ${car.name} (Grupo ${car.group_code}) por R$ ${car.price_weekly}/semana.`
+    `Olá! Quero alugar o ${car.name} (ou similar) por R$ ${car.price_weekly}/semana.`
   );
 
   return (
@@ -50,7 +50,7 @@ export function CarCard({ car }: { car: Car }) {
           </div>
         )}
         <Badge className="absolute left-3 top-3 bg-brand-gradient text-brand-foreground border-0">
-          Grupo {car.group_code}
+          {car.category}
         </Badge>
       </Link>
 
@@ -61,7 +61,7 @@ export function CarCard({ car }: { car: Car }) {
           </p>
           <Link to="/carros/$id" params={{ id: car.id }}>
             <h3 className="mt-1 font-display text-xl font-bold text-foreground hover:text-brand transition-colors">
-              {car.name}
+              {car.name} <span className="text-muted-foreground font-normal text-base">ou similares</span>
             </h3>
           </Link>
         </div>

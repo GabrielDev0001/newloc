@@ -99,15 +99,6 @@ export function Testimonials() {
               </p>
 
               <div className="mt-6 flex items-center gap-3 border-t border-border pt-4">
-                <div className="relative">
-                  <img
-                    src={r.avatar}
-                    alt=""
-                    loading="lazy"
-                    className="h-10 w-10 rounded-full border border-border bg-secondary object-cover"
-                  />
-                  <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-card bg-emerald-500" />
-                </div>
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold text-foreground">
                     <span className="select-none blur-[3px]">{r.name}</span>

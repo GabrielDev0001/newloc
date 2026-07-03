@@ -169,6 +169,55 @@ function Index() {
 
         <Testimonials />
 
+        {/* FAQ rápido */}
+        <section className="border-t border-border py-20">
+          <div className="container mx-auto px-4">
+            <div className="mx-auto max-w-3xl">
+              <div className="mb-10 text-center">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
+                  Perguntas frequentes
+                </p>
+                <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">
+                  Tire suas dúvidas antes de alugar
+                </h2>
+              </div>
+              <Accordion type="single" collapsible className="w-full">
+                {[
+                  {
+                    q: "Quais documentos preciso para alugar?",
+                    a: "CNH definitiva válida (categoria B ou superior), CPF, RG e comprovante de residência. Para motoristas de aplicativo, também pedimos o cadastro ativo em pelo menos uma plataforma.",
+                  },
+                  {
+                    q: "O que está incluso no aluguel semanal?",
+                    a: "Manutenção preventiva, revisões, troca de óleo e pneus, seguro completo, IPVA e suporte 24 horas. Você só se preocupa em rodar.",
+                  },
+                  {
+                    q: "Posso rodar em qualquer aplicativo?",
+                    a: "Sim. Nossos carros são compatíveis com Uber, 99, InDriver e demais plataformas de transporte por app.",
+                  },
+                  {
+                    q: "Como funciona a quilometragem?",
+                    a: "Cada plano tem uma franquia semanal generosa de quilômetros. Ao ver o carro, você confere exatamente quantos km estão inclusos.",
+                  },
+                  {
+                    q: "E se eu quiser trocar de carro?",
+                    a: "Você pode solicitar a troca a qualquer momento, sujeita à disponibilidade da frota. Fale com nosso time no WhatsApp.",
+                  },
+                ].map((item) => (
+                  <AccordionItem key={item.q} value={item.q}>
+                    <AccordionTrigger className="text-left font-semibold">
+                      {item.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground">
+                      {item.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </div>
+        </section>
+
         <LocationMap />
       </main>
       <Footer />

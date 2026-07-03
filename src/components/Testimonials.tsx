@@ -4,7 +4,7 @@ type Review = {
   name: string;
   when: string;
   text: string;
-  tint: string;
+  avatarSeed: string;
 };
 
 const reviews: Review[] = [
@@ -12,47 +12,54 @@ const reviews: Review[] = [
     name: "Artur L.",
     when: "5 meses atrás",
     text: "Aluguei um carro recentemente, gostei muito da experiência. Me atenderam super bem e o carro estava em ótimas condições, muito top!",
-    tint: "from-amber-400/30 to-amber-600/10",
+    avatarSeed: "artur-newloc",
   },
   {
     name: "Jackson H.",
     when: "5 meses atrás",
     text: "Já estou a mais de 1 ano alugando carro, zero problemas, pessoal super educados e atenciosos, melhor custo benefício.",
-    tint: "from-teal-400/30 to-teal-600/10",
+    avatarSeed: "jackson-newloc",
   },
   {
     name: "José F.",
     when: "3 meses atrás",
     text: "Nunca tive qualquer tipo de problema. Equipe preparada, veículos novos, limpos e conservados. Indiquei para os meus amigos, que estão satisfeitos.",
-    tint: "from-slate-400/30 to-slate-600/10",
+    avatarSeed: "jose-newloc",
   },
   {
     name: "Recupera C.",
     when: "4 meses atrás",
     text: "Locadora espetacular, altíssima qualidade, desde o atendimento inicial à entrega do veículo. Veículos extremamente higienizados, empresa super organizada com veículos de alto padrão. Recomendo a todos.",
-    tint: "from-rose-400/30 to-rose-600/10",
+    avatarSeed: "recupera-newloc",
   },
   {
     name: "Diogo S.",
     when: "5 meses atrás",
     text: "Experiência excelente! Carros muito bem cuidados, atendimento ágil e equipe super atenciosa. Com certeza voltarei a alugar.",
-    tint: "from-violet-400/30 to-violet-600/10",
+    avatarSeed: "diogo-newloc",
   },
   {
     name: "Giovana S.",
     when: "7 meses atrás",
     text: "Tive a experiência de locar um veículo por diária e não tenho do que reclamar! Do atendimento inicial à locação fui super bem atendida. Sempre minha primeira opção em Belo Horizonte!",
-    tint: "from-sky-400/30 to-sky-600/10",
+    avatarSeed: "giovana-newloc",
   },
 ];
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((p) => p[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
+function avatarUrl(seed: string) {
+  return `https://api.dicebear.com/7.x/personas/svg?seed=${encodeURIComponent(seed)}&backgroundType=gradientLinear&backgroundColor=b6e3f4,c0aede,ffd5dc,ffdfbf,d1d4f9`;
+}
+
+// Google "G" logo mark
+function GoogleG({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+    </svg>
+  );
 }
 
 export function Testimonials() {
@@ -61,14 +68,14 @@ export function Testimonials() {
       <div className="container mx-auto px-4">
         <div className="mb-12 flex flex-col items-center text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/5 px-4 py-1.5 text-xs font-semibold text-brand">
-            <Star className="h-3.5 w-3.5 fill-brand text-brand" />
-            5,0 no Google — dezenas de avaliações
+            <GoogleG className="h-4 w-4" />
+            Avaliações do Google — nota 5,0
           </div>
           <h2 className="mt-5 font-display text-3xl font-bold md:text-4xl">
             O que dizem sobre a Newloc
           </h2>
           <p className="mt-3 max-w-xl text-muted-foreground">
-            Avaliações reais de clientes. Preservamos a identidade dos autores por privacidade.
+            Comentários reais de clientes publicados no Google.
           </p>
         </div>
 
@@ -78,10 +85,11 @@ export function Testimonials() {
               key={i}
               className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-card"
             >
-              <div
-                className={`pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br ${r.tint} blur-2xl`}
-              />
-              <Quote className="h-6 w-6 text-brand/40" />
+              <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br from-brand/15 to-brand/0 blur-2xl" />
+              <div className="flex items-start justify-between">
+                <Quote className="h-6 w-6 text-brand/40" />
+                <GoogleG className="h-4 w-4 opacity-80" />
+              </div>
 
               <div className="mt-4 flex items-center gap-1 text-amber-500">
                 {Array.from({ length: 5 }).map((_, s) => (
@@ -95,15 +103,17 @@ export function Testimonials() {
 
               <div className="mt-6 flex items-center gap-3 border-t border-border pt-4">
                 <div className="relative">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-brand/80 to-brand-dark text-sm font-semibold text-brand-foreground">
-                    <span className="blur-[3px] select-none">{initials(r.name)}</span>
-                  </div>
+                  <img
+                    src={avatarUrl(r.avatarSeed)}
+                    alt=""
+                    loading="lazy"
+                    className="h-10 w-10 rounded-full border border-border bg-secondary object-cover"
+                  />
                   <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-card bg-emerald-500" />
                 </div>
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold text-foreground">
-                    <span className="blur-[2px] select-none">{r.name}</span>{" "}
-                    <span className="text-muted-foreground">— cliente verificado</span>
+                    {r.name}
                   </p>
                   <p className="text-xs text-muted-foreground">{r.when} • via Google</p>
                 </div>

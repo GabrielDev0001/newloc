@@ -133,6 +133,8 @@ function Index() {
           </div>
         </section>
 
+        <Testimonials />
+
         <LocationMap />
       </main>
       <Footer />

@@ -20,10 +20,10 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-hero text-white backdrop-blur">
       <nav className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link to="/" className="flex items-center" aria-label={BRAND.name}>
-          <img src={logoAsset.url} alt={`${BRAND.name} - Locação de Veículos`} className="h-9 w-auto" />
+          <img src={logoAsset.url} alt={`${BRAND.name} - Locação de Veículos`} className="h-10 w-auto" />
         </Link>
 
         <div className="hidden items-center gap-7 md:flex">
@@ -31,8 +31,8 @@ export function Navbar() {
             <Link
               key={n.to}
               to={n.to}
-              className="text-sm font-medium text-foreground/70 transition-colors hover:text-brand"
-              activeProps={{ className: "text-brand" }}
+              className="text-sm font-medium text-white/75 transition-colors hover:text-white"
+              activeProps={{ className: "text-white" }}
             >
               {n.label}
             </Link>

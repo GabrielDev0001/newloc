@@ -4,8 +4,16 @@ import { LocationMap } from "@/components/LocationMap";
 import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Car, Briefcase, CalendarCheck, ShieldCheck, Wrench, Headphones } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { ArrowRight, Car, Briefcase, CalendarCheck, ShieldCheck, Wrench, Headphones, Sparkles } from "lucide-react";
 import { BRAND } from "@/lib/constants";
+import heroImg from "@/assets/hero-car.jpg";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({

@@ -61,14 +61,14 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div className="border-t border-border bg-background md:hidden">
+        <div className="border-t border-white/10 bg-hero md:hidden">
           <div className="container mx-auto flex flex-col px-4 py-3">
             {navItems.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
                 onClick={() => setOpen(false)}
-                className="py-2.5 text-sm font-medium text-foreground/80"
+                className="py-2.5 text-sm font-medium text-white/85"
               >
                 {n.label}
               </Link>

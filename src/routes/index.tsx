@@ -131,6 +131,8 @@ function Index() {
             </div>
           </div>
         </section>
+
+        <LocationMap />
       </main>
       <Footer />
     </div>

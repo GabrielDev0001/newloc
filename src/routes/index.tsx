@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { LocationMap } from "@/components/LocationMap";
+import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Car, Briefcase, CalendarCheck, ShieldCheck, Wrench, Headphones } from "lucide-react";

@@ -27,6 +27,7 @@ export type Database = {
           image_url: string | null
           km_included: number
           name: string
+          price_daily: number | null
           price_original: number | null
           price_weekly: number
           segment: string
@@ -44,6 +45,7 @@ export type Database = {
           image_url?: string | null
           km_included?: number
           name: string
+          price_daily?: number | null
           price_original?: number | null
           price_weekly: number
           segment?: string
@@ -61,6 +63,7 @@ export type Database = {
           image_url?: string | null
           km_included?: number
           name?: string
+          price_daily?: number | null
           price_original?: number | null
           price_weekly?: number
           segment?: string

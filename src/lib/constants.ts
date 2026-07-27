@@ -11,7 +11,7 @@ export const SEGMENTS = {
     slug: "aplicativo",
     label: "Carro para aplicativo",
     short: "Aplicativo",
-    description: "Aluguel semanal para motoristas de Uber, 99 e InDriver.",
+    description: "Aluguel semanal para motoristas de Uber, 99 e InDrive.",
   },
   frota: {
     slug: "frota",

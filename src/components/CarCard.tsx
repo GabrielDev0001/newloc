@@ -85,6 +85,11 @@ export function CarCard({ car }: { car: Car }) {
             {brl(Number(car.price_weekly))}
             <span className="text-sm font-normal text-muted-foreground"> / semana</span>
           </p>
+          {car.price_daily ? (
+            <p className="mt-1 text-xs text-muted-foreground">
+              ou {brl(Number(car.price_daily))} / diária
+            </p>
+          ) : null}
         </div>
 
         <div className="grid grid-cols-2 gap-2">

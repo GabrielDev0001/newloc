@@ -90,12 +90,13 @@ function AdminPage() {
     const selectedCity = cities?.find((c) => c.id === editing.city_id);
     const payload = {
       name: editing.name!,
-      group_code: editing.group_code!,
+      group_code: editing.group_code ?? "",
       category: editing.category!,
       description: editing.description ?? null,
       image_url: editing.image_url || null,
       price_weekly: Number(editing.price_weekly),
       price_original: editing.price_original ? Number(editing.price_original) : null,
+      price_daily: editing.price_daily ? Number(editing.price_daily) : null,
       km_included: Number(editing.km_included),
       city: selectedCity?.name ?? editing.city ?? "São Paulo",
       city_id: editing.city_id ?? null,

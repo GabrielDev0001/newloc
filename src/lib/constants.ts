@@ -1,7 +1,7 @@
 export const BRAND = {
   name: "Newloc",
   tagline: "Locação de veículos",
-  whatsapp: "5511999999999", // Substitua pelo WhatsApp da Newloc (formato 55DDD9XXXXXXXX)
+  whatsapp: "(31) 98119-1890", // Substitua pelo WhatsApp da Newloc (formato 55DDD9XXXXXXXX)
   email: "contato@newloc.com.br",
   phone: "(31) 98119-1890",
 };

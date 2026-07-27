@@ -229,11 +229,12 @@ function AdminPage() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-24">Foto</TableHead>
                   <TableHead>Carro</TableHead>
-                  <TableHead>Grupo</TableHead>
                   <TableHead>Segmento</TableHead>
                   <TableHead>Cidade</TableHead>
                   <TableHead>Preço/sem</TableHead>
+                  <TableHead>Diária</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Ações</TableHead>
                 </TableRow>
@@ -241,11 +242,24 @@ function AdminPage() {
               <TableBody>
                 {cars.map((c) => (
                   <TableRow key={c.id}>
+                    <TableCell>
+                      {c.image_url ? (
+                        <img src={c.image_url} alt={c.name} className="h-12 w-20 rounded object-cover" />
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => { setEditing(c); setOpen(true); }}
+                          className="flex h-12 w-20 items-center justify-center rounded border border-dashed border-border text-muted-foreground hover:border-brand hover:text-brand"
+                        >
+                          <Upload className="h-4 w-4" />
+                        </button>
+                      )}
+                    </TableCell>
                     <TableCell className="font-medium">{c.name}<div className="text-xs text-muted-foreground">{c.category}</div></TableCell>
-                    <TableCell><Badge variant="outline">{c.group_code}</Badge></TableCell>
                     <TableCell><Badge variant={c.segment === "assinatura" ? "secondary" : "default"}>{c.segment ?? "aplicativo"}</Badge></TableCell>
                     <TableCell>{c.city}</TableCell>
                     <TableCell className="font-mono">R$ {Number(c.price_weekly).toFixed(2)}</TableCell>
+                    <TableCell className="font-mono">{c.price_daily ? `R$ ${Number(c.price_daily).toFixed(2)}` : "—"}</TableCell>
                     <TableCell>{c.available ? <Badge className="bg-green-100 text-green-700 hover:bg-green-100">Disponível</Badge> : <Badge variant="secondary">Indisponível</Badge>}</TableCell>
                     <TableCell className="text-right">
                       <Button size="icon" variant="ghost" onClick={() => { setEditing(c); setOpen(true); }}><Pencil className="h-4 w-4" /></Button>

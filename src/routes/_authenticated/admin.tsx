@@ -149,7 +149,7 @@ function AdminPage() {
                 <form onSubmit={save} className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div><Label>Nome *</Label><Input required value={editing.name ?? ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })} placeholder="Volkswagen Polo" /></div>
-                    <div><Label>Grupo *</Label><Input required value={editing.group_code ?? ""} onChange={(e) => setEditing({ ...editing, group_code: e.target.value })} placeholder="ZC" /></div>
+                    <div><Label>Preço diária (R$)</Label><Input type="number" step="0.01" value={editing.price_daily ?? ""} onChange={(e) => setEditing({ ...editing, price_daily: e.target.value ? Number(e.target.value) : null })} placeholder="99.00" /></div>
                     <div><Label>Categoria *</Label>
                       <Select value={editing.category ?? "Hatch"} onValueChange={(v) => setEditing({ ...editing, category: v })}>
                         <SelectTrigger><SelectValue /></SelectTrigger>

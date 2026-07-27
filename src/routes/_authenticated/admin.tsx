@@ -27,7 +27,7 @@ type FormState = Partial<CarType> & { segment?: string };
 
 const empty: FormState = {
   name: "", group_code: "", category: "Hatch", description: "", image_url: "",
-  price_weekly: 0, price_original: null, km_included: 750, city: "São Paulo",
+  price_weekly: 0, price_original: null, price_daily: null, km_included: 750, city: "São Paulo",
   city_id: null, available: true, segment: "aplicativo",
 };
 

@@ -14,6 +14,7 @@ export type Car = {
   image_url: string | null;
   price_weekly: number;
   price_original: number | null;
+  price_daily?: number | null;
   km_included: number;
   city: string;
   city_id: string | null;

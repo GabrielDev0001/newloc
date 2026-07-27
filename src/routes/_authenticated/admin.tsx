@@ -27,7 +27,7 @@ type FormState = Partial<CarType> & { segment?: string };
 
 const empty: FormState = {
   name: "", group_code: "", category: "Hatch", description: "", image_url: "",
-  price_weekly: 0, price_original: null, km_included: 750, city: "São Paulo",
+  price_weekly: 0, price_original: null, price_daily: null, km_included: 750, city: "São Paulo",
   city_id: null, available: true, segment: "aplicativo",
 };
 
@@ -90,12 +90,13 @@ function AdminPage() {
     const selectedCity = cities?.find((c) => c.id === editing.city_id);
     const payload = {
       name: editing.name!,
-      group_code: editing.group_code!,
+      group_code: editing.group_code ?? "",
       category: editing.category!,
       description: editing.description ?? null,
       image_url: editing.image_url || null,
       price_weekly: Number(editing.price_weekly),
       price_original: editing.price_original ? Number(editing.price_original) : null,
+      price_daily: editing.price_daily ? Number(editing.price_daily) : null,
       km_included: Number(editing.km_included),
       city: selectedCity?.name ?? editing.city ?? "São Paulo",
       city_id: editing.city_id ?? null,
@@ -148,7 +149,7 @@ function AdminPage() {
                 <form onSubmit={save} className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div><Label>Nome *</Label><Input required value={editing.name ?? ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })} placeholder="Volkswagen Polo" /></div>
-                    <div><Label>Grupo *</Label><Input required value={editing.group_code ?? ""} onChange={(e) => setEditing({ ...editing, group_code: e.target.value })} placeholder="ZC" /></div>
+                    <div><Label>Preço diária (R$)</Label><Input type="number" step="0.01" value={editing.price_daily ?? ""} onChange={(e) => setEditing({ ...editing, price_daily: e.target.value ? Number(e.target.value) : null })} placeholder="99.00" /></div>
                     <div><Label>Categoria *</Label>
                       <Select value={editing.category ?? "Hatch"} onValueChange={(v) => setEditing({ ...editing, category: v })}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
@@ -228,11 +229,12 @@ function AdminPage() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-24">Foto</TableHead>
                   <TableHead>Carro</TableHead>
-                  <TableHead>Grupo</TableHead>
                   <TableHead>Segmento</TableHead>
                   <TableHead>Cidade</TableHead>
                   <TableHead>Preço/sem</TableHead>
+                  <TableHead>Diária</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Ações</TableHead>
                 </TableRow>
@@ -240,11 +242,24 @@ function AdminPage() {
               <TableBody>
                 {cars.map((c) => (
                   <TableRow key={c.id}>
+                    <TableCell>
+                      {c.image_url ? (
+                        <img src={c.image_url} alt={c.name} className="h-12 w-20 rounded object-cover" />
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => { setEditing(c); setOpen(true); }}
+                          className="flex h-12 w-20 items-center justify-center rounded border border-dashed border-border text-muted-foreground hover:border-brand hover:text-brand"
+                        >
+                          <Upload className="h-4 w-4" />
+                        </button>
+                      )}
+                    </TableCell>
                     <TableCell className="font-medium">{c.name}<div className="text-xs text-muted-foreground">{c.category}</div></TableCell>
-                    <TableCell><Badge variant="outline">{c.group_code}</Badge></TableCell>
                     <TableCell><Badge variant={c.segment === "assinatura" ? "secondary" : "default"}>{c.segment ?? "aplicativo"}</Badge></TableCell>
                     <TableCell>{c.city}</TableCell>
                     <TableCell className="font-mono">R$ {Number(c.price_weekly).toFixed(2)}</TableCell>
+                    <TableCell className="font-mono">{c.price_daily ? `R$ ${Number(c.price_daily).toFixed(2)}` : "—"}</TableCell>
                     <TableCell>{c.available ? <Badge className="bg-green-100 text-green-700 hover:bg-green-100">Disponível</Badge> : <Badge variant="secondary">Indisponível</Badge>}</TableCell>
                     <TableCell className="text-right">
                       <Button size="icon" variant="ghost" onClick={() => { setEditing(c); setOpen(true); }}><Pencil className="h-4 w-4" /></Button>

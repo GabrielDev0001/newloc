@@ -39,7 +39,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <MessageCircle className="mr-2 h-4 w-4" />Falar no WhatsApp
+              <WhatsAppIcon className="mr-2 h-4 w-4" />Falar no WhatsApp
             </a>
           </Button>
         </div>

@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { BRAND } from "@/lib/constants";
-import { Phone, Mail, CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Phone, Mail, CheckCircle2, MessageCircle } from "lucide-react";
 
 export function Footer() {
   return (
@@ -25,16 +26,21 @@ export function Footer() {
             <li><Link to="/como-funciona" className="hover:text-foreground">Como funciona</Link></li>
           </ul>
         </div>
-        <div>
+<div>
           <p className="text-sm font-semibold text-foreground">Contato</p>
           <div className="mt-3 space-y-2 text-sm text-muted-foreground">
             <p className="flex items-center gap-2"><Phone className="h-4 w-4" />{BRAND.phone}</p>
             <p className="flex items-center gap-2"><Mail className="h-4 w-4" />{BRAND.email}</p>
           </div>
-          <ul className="mt-4 space-y-1.5 text-xs text-muted-foreground">
-            <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-brand" />Sem taxa de adesão</li>
-            <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-brand" />Suporte 24h</li>
-          </ul>
+          <Button asChild className="mt-4 bg-[#25D366] text-white hover:bg-[#1fb958]">
+            <a
+              href="https://wa.me/5531981199021?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Newloc%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MessageCircle className="mr-2 h-4 w-4" />Falar no WhatsApp
+            </a>
+          </Button>
         </div>
       </div>
       <div className="border-t border-border py-6 text-center text-xs text-muted-foreground">

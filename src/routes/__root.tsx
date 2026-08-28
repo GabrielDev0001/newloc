@@ -118,6 +118,7 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 import { Toaster } from "@/components/ui/sonner";
+import { WhatsAppFloat } from "@/components/WhatsAppButton";
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
@@ -125,6 +126,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <WhatsAppFloat />
       <Toaster richColors position="top-right" />
     </QueryClientProvider>
   );

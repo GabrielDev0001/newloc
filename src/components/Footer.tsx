@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { BRAND } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, CheckCircle2, MessageCircle } from "lucide-react";
+import { Phone, Mail, CheckCircle2 } from "lucide-react";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 
 export function Footer() {
   return (
@@ -38,7 +39,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <MessageCircle className="mr-2 h-4 w-4" />Falar no WhatsApp
+              <WhatsAppIcon className="mr-2 h-4 w-4" />Falar no WhatsApp
             </a>
           </Button>
         </div>

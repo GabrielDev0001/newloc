@@ -75,13 +75,9 @@ export function Navbar() {
                   <Link to="/admin"><Shield className="mr-2 h-4 w-4" />Admin</Link>
                 </Button>
               )}
-              {user ? (
+              {user && (
                 <Button variant="ghost" size="sm" onClick={() => { setOpen(false); supabase.auth.signOut(); }}>
                   <LogOut className="mr-2 h-4 w-4" />Sair
-                </Button>
-              ) : (
-                <Button asChild size="sm" variant="ghost" onClick={() => setOpen(false)}>
-                  <Link to="/auth"><UserIcon className="mr-2 h-4 w-4" />Entrar</Link>
                 </Button>
               )}
             </div>

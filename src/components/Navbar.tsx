@@ -45,13 +45,9 @@ export function Navbar() {
               <Link to="/admin"><Shield className="mr-2 h-4 w-4" />Admin</Link>
             </Button>
           )}
-          {user ? (
+          {user && (
             <Button variant="ghost" size="sm" onClick={() => supabase.auth.signOut()} className="hidden sm:inline-flex">
               <LogOut className="mr-2 h-4 w-4" />Sair
-            </Button>
-          ) : (
-            <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex">
-              <Link to="/auth"><UserIcon className="mr-2 h-4 w-4" />Entrar</Link>
             </Button>
           )}
           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setOpen((v) => !v)} aria-label="Menu">

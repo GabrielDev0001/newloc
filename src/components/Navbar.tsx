@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { BRAND } from "@/lib/constants";
-import { LogOut, Shield, User as UserIcon, Menu, X } from "lucide-react";
+import { LogOut, Shield, Menu, X } from "lucide-react";
 import logoAsset from "@/assets/newloc-logo-white.png.asset.json";
 
 const navItems: { to: string; label: string }[] = [

@@ -12,9 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as FrotaRouteImport } from './routes/frota'
 import { Route as ComoFuncionaRouteImport } from './routes/como-funciona'
-import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssinaturaRouteImport } from './routes/assinatura'
 import { Route as AplicativoRouteImport } from './routes/aplicativo'
+import { Route as Adm_loginRouteImport } from './routes/adm_login'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CarrosIdRouteImport } from './routes/carros.$id'
@@ -37,11 +37,6 @@ const ComoFuncionaRoute = ComoFuncionaRouteImport.update({
   path: '/como-funciona',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AssinaturaRoute = AssinaturaRouteImport.update({
   id: '/assinatura',
   path: '/assinatura',
@@ -50,6 +45,11 @@ const AssinaturaRoute = AssinaturaRouteImport.update({
 const AplicativoRoute = AplicativoRouteImport.update({
   id: '/aplicativo',
   path: '/aplicativo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Adm_loginRoute = Adm_loginRouteImport.update({
+  id: '/adm_login',
+  path: '/adm_login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -86,9 +86,9 @@ const AuthenticatedAdminCidadesRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/adm_login': typeof Adm_loginRoute
   '/aplicativo': typeof AplicativoRoute
   '/assinatura': typeof AssinaturaRoute
-  '/auth': typeof AuthRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/frota': typeof FrotaRoute
   '/sobre': typeof SobreRoute
@@ -99,9 +99,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/adm_login': typeof Adm_loginRoute
   '/aplicativo': typeof AplicativoRoute
   '/assinatura': typeof AssinaturaRoute
-  '/auth': typeof AuthRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/frota': typeof FrotaRoute
   '/sobre': typeof SobreRoute
@@ -114,9 +114,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/adm_login': typeof Adm_loginRoute
   '/aplicativo': typeof AplicativoRoute
   '/assinatura': typeof AssinaturaRoute
-  '/auth': typeof AuthRoute
   '/como-funciona': typeof ComoFuncionaRoute
   '/frota': typeof FrotaRoute
   '/sobre': typeof SobreRoute
@@ -129,9 +129,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/adm_login'
     | '/aplicativo'
     | '/assinatura'
-    | '/auth'
     | '/como-funciona'
     | '/frota'
     | '/sobre'
@@ -142,9 +142,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/adm_login'
     | '/aplicativo'
     | '/assinatura'
-    | '/auth'
     | '/como-funciona'
     | '/frota'
     | '/sobre'
@@ -156,9 +156,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/adm_login'
     | '/aplicativo'
     | '/assinatura'
-    | '/auth'
     | '/como-funciona'
     | '/frota'
     | '/sobre'
@@ -171,9 +171,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  Adm_loginRoute: typeof Adm_loginRoute
   AplicativoRoute: typeof AplicativoRoute
   AssinaturaRoute: typeof AssinaturaRoute
-  AuthRoute: typeof AuthRoute
   ComoFuncionaRoute: typeof ComoFuncionaRoute
   FrotaRoute: typeof FrotaRoute
   SobreRoute: typeof SobreRoute
@@ -203,13 +203,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComoFuncionaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/assinatura': {
       id: '/assinatura'
       path: '/assinatura'
@@ -222,6 +215,13 @@ declare module '@tanstack/react-router' {
       path: '/aplicativo'
       fullPath: '/aplicativo'
       preLoaderRoute: typeof AplicativoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/adm_login': {
+      id: '/adm_login'
+      path: '/adm_login'
+      fullPath: '/adm_login'
+      preLoaderRoute: typeof Adm_loginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -296,9 +296,9 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  Adm_loginRoute: Adm_loginRoute,
   AplicativoRoute: AplicativoRoute,
   AssinaturaRoute: AssinaturaRoute,
-  AuthRoute: AuthRoute,
   ComoFuncionaRoute: ComoFuncionaRoute,
   FrotaRoute: FrotaRoute,
   SobreRoute: SobreRoute,

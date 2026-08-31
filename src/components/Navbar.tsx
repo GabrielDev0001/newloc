@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { BRAND } from "@/lib/constants";
-import { LogOut, Shield, User as UserIcon, Menu, X } from "lucide-react";
+import { LogOut, Shield, Menu, X } from "lucide-react";
 import logoAsset from "@/assets/newloc-logo-white.png.asset.json";
 
 const navItems: { to: string; label: string }[] = [
@@ -45,13 +45,9 @@ export function Navbar() {
               <Link to="/admin"><Shield className="mr-2 h-4 w-4" />Admin</Link>
             </Button>
           )}
-          {user ? (
+          {user && (
             <Button variant="ghost" size="sm" onClick={() => supabase.auth.signOut()} className="hidden sm:inline-flex">
               <LogOut className="mr-2 h-4 w-4" />Sair
-            </Button>
-          ) : (
-            <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex">
-              <Link to="/auth"><UserIcon className="mr-2 h-4 w-4" />Entrar</Link>
             </Button>
           )}
           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setOpen((v) => !v)} aria-label="Menu">
@@ -79,13 +75,9 @@ export function Navbar() {
                   <Link to="/admin"><Shield className="mr-2 h-4 w-4" />Admin</Link>
                 </Button>
               )}
-              {user ? (
+              {user && (
                 <Button variant="ghost" size="sm" onClick={() => { setOpen(false); supabase.auth.signOut(); }}>
                   <LogOut className="mr-2 h-4 w-4" />Sair
-                </Button>
-              ) : (
-                <Button asChild size="sm" variant="ghost" onClick={() => setOpen(false)}>
-                  <Link to="/auth"><UserIcon className="mr-2 h-4 w-4" />Entrar</Link>
                 </Button>
               )}
             </div>

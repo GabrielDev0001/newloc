@@ -40,11 +40,17 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
+          <Button asChild size="sm" className="hidden bg-white text-hero hover:bg-white/90 sm:inline-flex">
+            <a href={CLIENT_PORTAL_URL} target="_blank" rel="noopener noreferrer">
+              <UserRound className="mr-2 h-4 w-4" />Portal do Cliente
+            </a>
+          </Button>
           {isAdmin && (
             <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
               <Link to="/admin"><Shield className="mr-2 h-4 w-4" />Admin</Link>
             </Button>
           )}
+
           {user && (
             <Button variant="ghost" size="sm" onClick={() => supabase.auth.signOut()} className="hidden sm:inline-flex">
               <LogOut className="mr-2 h-4 w-4" />Sair

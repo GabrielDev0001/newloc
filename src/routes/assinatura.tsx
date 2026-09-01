@@ -161,7 +161,7 @@ function AssinaturaPage() {
                 </div>
               ) : cars && cars.length > 0 ? (
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {cars.map((c) => <CarCard key={c.id} car={c} />)}
+                  {cars.map((c) => <CarCard key={c.id} car={c} period="mês" />)}
                 </div>
               ) : (
                 <div className="rounded-2xl border border-dashed border-border bg-secondary/40 p-12 text-center text-muted-foreground">

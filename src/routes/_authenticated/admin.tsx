@@ -177,7 +177,7 @@ function AdminPage() {
                     </div>
                     <div><Label>Preço semanal (R$) *</Label><Input type="number" step="0.01" required value={editing.price_weekly ?? 0} onChange={(e) => setEditing({ ...editing, price_weekly: Number(e.target.value) })} /></div>
                     <div><Label>Preço original (R$)</Label><Input type="number" step="0.01" value={editing.price_original ?? ""} onChange={(e) => setEditing({ ...editing, price_original: e.target.value ? Number(e.target.value) : null })} /></div>
-                    <div><Label>Km incluso/semana</Label><Input type="number" value={editing.km_included ?? 750} onChange={(e) => setEditing({ ...editing, km_included: Number(e.target.value) })} /></div>
+                    <div><Label>Km incluso/mês</Label><Input type="number" value={editing.km_included ?? 750} onChange={(e) => setEditing({ ...editing, km_included: Number(e.target.value) })} /></div>
                     <div className="flex items-center gap-3 pt-6"><Switch checked={editing.available ?? true} onCheckedChange={(c) => setEditing({ ...editing, available: c })} /><Label>Disponível</Label></div>
                   </div>
 

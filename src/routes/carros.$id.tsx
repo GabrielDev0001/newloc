@@ -81,7 +81,7 @@ function CarDetailPage() {
 
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {[
-                { icon: Gauge, label: `${car.km_included} km/sem`, sub: "Franquia semanal" },
+                { icon: Gauge, label: `${car.km_included} km/mês`, sub: "Franquia mensal" },
                 { icon: Wrench, label: "Inclusa", sub: "Manutenção" },
                 { icon: ShieldCheck, label: "Completo", sub: "Seguro" },
               ].map((f) => (

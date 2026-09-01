@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { BRAND } from "@/lib/constants";
-import { LogOut, Shield, Menu, X } from "lucide-react";
+import { LogOut, Shield, Menu, X, UserRound } from "lucide-react";
+
+const CLIENT_PORTAL_URL = "https://newloc.portalfleet.com.br/auth/login";
 import logoAsset from "@/assets/newloc-logo-white.png.asset.json";
 
 const navItems: { to: string; label: string }[] = [
@@ -40,11 +42,17 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
+          <Button asChild size="sm" className="hidden bg-white text-hero hover:bg-white/90 sm:inline-flex">
+            <a href={CLIENT_PORTAL_URL} target="_blank" rel="noopener noreferrer">
+              <UserRound className="mr-2 h-4 w-4" />Portal do Cliente
+            </a>
+          </Button>
           {isAdmin && (
             <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
               <Link to="/admin"><Shield className="mr-2 h-4 w-4" />Admin</Link>
             </Button>
           )}
+
           {user && (
             <Button variant="ghost" size="sm" onClick={() => supabase.auth.signOut()} className="hidden sm:inline-flex">
               <LogOut className="mr-2 h-4 w-4" />Sair
@@ -69,6 +77,15 @@ export function Navbar() {
                 {n.label}
               </Link>
             ))}
+            <a
+              href={CLIENT_PORTAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="mt-2 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-hero"
+            >
+              <UserRound className="mr-2 h-4 w-4" />Portal do Cliente
+            </a>
             <div className="mt-2 flex gap-2 border-t border-border pt-3">
               {isAdmin && (
                 <Button asChild variant="outline" size="sm" onClick={() => setOpen(false)}>

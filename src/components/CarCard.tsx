@@ -25,11 +25,12 @@ export type Car = {
 const brl = (v: number) =>
   v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 2 });
 
-export function CarCard({ car }: { car: Car }) {
+export function CarCard({ car, period = "semana" }: { car: Car; period?: "semana" | "mês" }) {
   const hasDiscount = car.price_original && Number(car.price_original) > Number(car.price_weekly);
   const link = buildWhatsappLink(
-    `Olá! Quero alugar o ${car.name} (ou similar) por R$ ${car.price_weekly}/semana.`
+    `Olá! Quero alugar o ${car.name} (ou similar) por R$ ${car.price_weekly}/${period}.`
   );
+
 
   return (
     <Card className="group flex flex-col overflow-hidden border-border/60 transition-all hover:-translate-y-1 hover:shadow-card">
@@ -72,7 +73,7 @@ export function CarCard({ car }: { car: Car }) {
         )}
 
         <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
-          <span className="inline-flex items-center gap-1"><Gauge className="h-3.5 w-3.5" />{car.km_included} km/sem</span>
+          <span className="inline-flex items-center gap-1"><Gauge className="h-3.5 w-3.5" />{car.km_included} km/mês</span>
         </div>
 
 
@@ -83,14 +84,15 @@ export function CarCard({ car }: { car: Car }) {
           <p className="text-xs text-muted-foreground">por</p>
           <p className="font-display text-3xl font-bold text-brand">
             {brl(Number(car.price_weekly))}
-            <span className="text-sm font-normal text-muted-foreground"> / semana</span>
+            <span className="text-sm font-normal text-muted-foreground"> / {period}</span>
           </p>
-          {car.price_daily ? (
+          {car.price_daily && period === "semana" ? (
             <p className="mt-1 text-xs text-muted-foreground">
               ou {brl(Number(car.price_daily))} / diária
             </p>
           ) : null}
         </div>
+
 
         <div className="grid grid-cols-2 gap-2">
           <Button asChild variant="outline">

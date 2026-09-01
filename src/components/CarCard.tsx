@@ -73,7 +73,7 @@ export function CarCard({ car, period = "semana" }: { car: Car; period?: "semana
         )}
 
         <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
-          <span className="inline-flex items-center gap-1"><Gauge className="h-3.5 w-3.5" />{car.km_included} km/sem</span>
+          <span className="inline-flex items-center gap-1"><Gauge className="h-3.5 w-3.5" />{car.km_included} km/mês</span>
         </div>
 
 
@@ -84,14 +84,15 @@ export function CarCard({ car, period = "semana" }: { car: Car; period?: "semana
           <p className="text-xs text-muted-foreground">por</p>
           <p className="font-display text-3xl font-bold text-brand">
             {brl(Number(car.price_weekly))}
-            <span className="text-sm font-normal text-muted-foreground"> / semana</span>
+            <span className="text-sm font-normal text-muted-foreground"> / {period}</span>
           </p>
-          {car.price_daily ? (
+          {car.price_daily && period === "semana" ? (
             <p className="mt-1 text-xs text-muted-foreground">
               ou {brl(Number(car.price_daily))} / diária
             </p>
           ) : null}
         </div>
+
 
         <div className="grid grid-cols-2 gap-2">
           <Button asChild variant="outline">

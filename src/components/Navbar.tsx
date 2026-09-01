@@ -42,7 +42,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button asChild size="sm" className="hidden bg-white text-hero hover:bg-white/90 sm:inline-flex">
+          <Button asChild size="sm" className="hidden bg-white text-brand-dark hover:bg-white/90 sm:inline-flex">
             <a href={CLIENT_PORTAL_URL} target="_blank" rel="noopener noreferrer">
               <UserRound className="mr-2 h-4 w-4" />Portal do Cliente
             </a>
@@ -82,7 +82,7 @@ export function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setOpen(false)}
-              className="mt-2 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-hero"
+              className="mt-2 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-brand-dark"
             >
               <UserRound className="mr-2 h-4 w-4" />Portal do Cliente
             </a>

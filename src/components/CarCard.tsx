@@ -25,11 +25,12 @@ export type Car = {
 const brl = (v: number) =>
   v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 2 });
 
-export function CarCard({ car }: { car: Car }) {
+export function CarCard({ car, period = "semana" }: { car: Car; period?: "semana" | "mês" }) {
   const hasDiscount = car.price_original && Number(car.price_original) > Number(car.price_weekly);
   const link = buildWhatsappLink(
-    `Olá! Quero alugar o ${car.name} (ou similar) por R$ ${car.price_weekly}/semana.`
+    `Olá! Quero alugar o ${car.name} (ou similar) por R$ ${car.price_weekly}/${period}.`
   );
+
 
   return (
     <Card className="group flex flex-col overflow-hidden border-border/60 transition-all hover:-translate-y-1 hover:shadow-card">

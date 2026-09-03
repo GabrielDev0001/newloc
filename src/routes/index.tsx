@@ -32,7 +32,7 @@ const solutions = [
     to: "/aplicativo" as const,
     icon: Car,
     title: "Carro para aplicativo",
-    desc: "Aluguel semanal para motoristas de Uber, 99 e InDriver. Manutenção, seguro e suporte inclusos.",
+    desc: "Aluguel semanal para motoristas de Uber, 99 e InDriver. Manutenção, gestão de multas e suporte inclusos.",
     cta: "Ver carros disponíveis",
     highlight: true,
   },
@@ -77,7 +77,7 @@ function Index() {
                 </span>
               </h1>
               <p className="mt-6 max-w-lg text-lg text-white/80">
-                Aplicativo, frota empresarial ou assinatura. Manutenção inclusa, seguro completo
+                Aplicativo, frota empresarial ou assinatura. Manutenção inclusa, gestão de multas
                 e suporte 24h para você focar no volante.
               </p>
               <div className="mt-10 flex flex-wrap gap-3">
@@ -150,7 +150,7 @@ function Index() {
             <div className="grid gap-8 md:grid-cols-3">
               {[
                 { icon: Wrench, title: "Manutenção inclusa", desc: "Revisões, óleo e pneus por nossa conta." },
-                { icon: ShieldCheck, title: "Seguro completo", desc: "Cobertura para você focar no que importa." },
+                { icon: ShieldCheck, title: "Gestão de multas", desc: "Cuidamos das multas do veículo para você." },
                 { icon: Headphones, title: "Suporte 24h", desc: "Atendimento dedicado todos os dias." },
               ].map((b) => (
                 <div key={b.title} className="flex items-start gap-4">
@@ -189,7 +189,7 @@ function Index() {
                   },
                   {
                     q: "O que está incluso no aluguel semanal?",
-                    a: "Manutenção preventiva, revisões, troca de óleo e pneus, seguro completo, IPVA e suporte 24 horas. Você só se preocupa em rodar.",
+                    a: "Manutenção preventiva, revisões, troca de óleo e pneus, gestão de multas, IPVA e suporte 24 horas. Você só se preocupa em rodar.",
                   },
                   {
                     q: "Posso rodar em qualquer aplicativo?",
@@ -201,7 +201,7 @@ function Index() {
                   },
                   {
                     q: "E se eu quiser trocar de carro?",
-                    a: "Você pode solicitar a troca a qualquer momento, sujeita à disponibilidade da frota. Fale com nosso time no WhatsApp.",
+                    a: "Para aplicativo, a troca pode ser feita a qualquer momento, mediante disponibilidade de veículo em pátio (consulte as condições e taxas com a nossa central de atendimento). Para frota e assinatura, a troca pode ser solicitada após o término do prazo mínimo do contrato.",
                   },
                 ].map((item) => (
                   <AccordionItem key={item.q} value={item.q}>

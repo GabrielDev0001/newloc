@@ -23,7 +23,7 @@ export const Route = createFileRoute("/assinatura")({
       { title: `Carro por assinatura — ${BRAND.name}` },
       { name: "description", content: "Carro por assinatura para pessoa física, de 12 a 36 meses. Não disponível para motoristas de aplicativo." },
       { property: "og:title", content: `Carro por assinatura — ${BRAND.name}` },
-      { property: "og:description", content: "Plano estendido, manutenção e seguro inclusos. PF, uso particular." },
+      { property: "og:description", content: "Plano estendido, manutenção e gestão de multas inclusos. PF, uso particular." },
     ],
   }),
   component: AssinaturaPage,
@@ -112,7 +112,7 @@ function AssinaturaPage() {
                 Carro por assinatura, sem dor de cabeça
               </h1>
               <p className="mt-4 max-w-2xl text-muted-foreground md:text-lg">
-                Planos de 12 a 36 meses com manutenção, seguro e documentação inclusos.
+                Planos de 12 a 36 meses com manutenção, gestão de multas e documentação inclusos.
                 Você dirige, a Newloc cuida do resto.
               </p>
               <div className="mt-6 flex items-start gap-3 rounded-xl border border-amber-300/60 bg-amber-50 p-4 text-sm text-amber-900">
@@ -133,7 +133,7 @@ function AssinaturaPage() {
               {[
                 { icon: CalendarCheck, t: "12, 24 ou 36 meses", d: "Você escolhe o prazo que cabe no seu planejamento." },
                 { icon: Wrench, t: "Manutenção inclusa", d: "Revisões, óleo e pneus por nossa conta." },
-                { icon: ShieldCheck, t: "Seguro e documentação", d: "IPVA, licenciamento e seguro inclusos na mensalidade." },
+                { icon: ShieldCheck, t: "Gestão de multas e documentação", d: "IPVA, licenciamento e gestão de multas inclusos na mensalidade." },
               ].map((b) => (
                 <div key={b.t} className="flex items-start gap-4 rounded-2xl border border-border p-5">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">

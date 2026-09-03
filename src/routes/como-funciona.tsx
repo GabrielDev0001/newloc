@@ -37,7 +37,7 @@ function ComoFuncionaPage() {
                 { n: "01", t: "Escolha seu carro", d: "Navegue pela frota, filtre por cidade e categoria e selecione o grupo." },
                 { n: "02", t: "Envie sua documentação", d: "CNH com EAR, comprovante de residência e CPF regular. A análise é rápida." },
                 { n: "03", t: "Retire na loja", d: "Após aprovação, retire o carro na cidade selecionada com tudo pronto." },
-                { n: "04", t: "Rode tranquilo", d: "Manutenção, seguro e suporte 24h estão inclusos. Foque em rodar." },
+                { n: "04", t: "Rode tranquilo", d: "Manutenção, gestão de multas e suporte 24h estão inclusos. Foque em rodar." },
               ].map((s) => (
                 <Card key={s.n} className="p-6">
                   <span className="font-display text-4xl font-bold text-brand/70">{s.n}</span>
@@ -68,9 +68,9 @@ function ComoFuncionaPage() {
               <Accordion type="single" collapsible className="mt-6 text-left">
                 {[
                   { q: "Quanto tempo leva a análise?", a: "De 1 a 2 dias úteis após o envio completo dos documentos." },
-                  { q: "Posso trocar de carro?", a: "Sim. Após 30 dias você pode solicitar troca para outro grupo, sujeito à disponibilidade." },
+                  { q: "Posso trocar de carro?", a: "Para aplicativo, sim, a qualquer momento, mediante disponibilidade de veículo em pátio (consulte condições e taxas com a nossa central de atendimento). Para frota e assinatura, a troca pode ser solicitada após o término do prazo mínimo do contrato." },
                   { q: "Tem caução?", a: "Sim, valor reembolsável definido por grupo. Informado antes da retirada." },
-                  { q: "E se eu tiver um sinistro?", a: "Acione o suporte 24h. Cuidamos do reboque, da seguradora e do carro reserva quando aplicável." },
+                  { q: "E se eu tiver um sinistro?", a: "Acione o suporte 24h. Cuidamos do reboque e do carro reserva quando aplicável." },
                 ].map((f, i) => (
                   <AccordionItem key={i} value={`f-${i}`}>
                     <AccordionTrigger className="text-left">{f.q}</AccordionTrigger>

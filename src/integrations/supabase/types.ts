@@ -20,6 +20,7 @@ export type Database = {
           category: string
           city: string
           city_id: string | null
+          coming_soon: boolean
           created_at: string
           description: string | null
           group_code: string
@@ -38,6 +39,7 @@ export type Database = {
           category: string
           city?: string
           city_id?: string | null
+          coming_soon?: boolean
           created_at?: string
           description?: string | null
           group_code: string
@@ -56,6 +58,7 @@ export type Database = {
           category?: string
           city?: string
           city_id?: string | null
+          coming_soon?: boolean
           created_at?: string
           description?: string | null
           group_code?: string

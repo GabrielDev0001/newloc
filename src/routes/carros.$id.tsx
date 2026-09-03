@@ -6,13 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { buildWhatsappLink, BRAND, CAR_SEGMENTS, kmLabel, segmentOf, segmentPrice } from "@/lib/constants";
+import { carStatusTag } from "@/components/CarCard";
 import { ArrowLeft, Car as CarIcon, Gauge, MapPin, ShieldCheck, Wrench, Sparkles, Phone, MessageCircle, Loader2, Receipt } from "lucide-react";
 
 type CarDetail = {
   id: string; name: string; group_code: string; category: string;
   description: string | null; image_url: string | null;
   price_weekly: number; price_original: number | null; price_daily: number | null;
-  km_included: number; city: string; available: boolean; segment: string;
+  km_included: number; city: string; available: boolean; coming_soon: boolean | null; segment: string;
   cities: { name: string; state: string; address: string | null; phone: string | null; hours: string | null } | null;
 };
 
@@ -54,6 +55,7 @@ function CarDetailPage() {
   const price = segmentPrice(car);
   const hasDiscount = car.price_original && Number(car.price_original) > price;
   const period = CAR_SEGMENTS[segmentOf(car.segment)].period;
+  const statusTag = carStatusTag(car);
   const link = buildWhatsappLink(`Olá! Quero alugar o ${car.name} (Grupo ${car.group_code}) por R$ ${price}/${period}.`);
 
   return (
@@ -73,6 +75,11 @@ function CarDetailPage() {
                 <div className="flex h-full items-center justify-center text-muted-foreground"><CarIcon className="h-24 w-24" /></div>
               )}
               <Badge className="absolute left-4 top-4 bg-brand-gradient text-brand-foreground border-0">Grupo {car.group_code}</Badge>
+              {statusTag && (
+                <Badge className={`absolute right-4 top-4 border-0 ${statusTag === "Breve" ? "bg-amber-500 text-white" : "bg-neutral-700 text-white"}`}>
+                  {statusTag}
+                </Badge>
+              )}
             </div>
 
             <div className="mt-8">
@@ -116,11 +123,17 @@ function CarDetailPage() {
                 <span className="text-base font-normal text-muted-foreground"> / {period}</span>
               </p>
 
-              <Button asChild size="lg" className="mt-6 w-full bg-brand-gradient text-brand-foreground">
-                <a href={link} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="mr-2 h-5 w-5" />Reservar pelo WhatsApp
-                </a>
-              </Button>
+              {statusTag ? (
+                <Button disabled size="lg" className="mt-6 w-full bg-brand-gradient text-brand-foreground">
+                  {statusTag === "Breve" ? "Em breve" : "Indisponível no momento"}
+                </Button>
+              ) : (
+                <Button asChild size="lg" className="mt-6 w-full bg-brand-gradient text-brand-foreground">
+                  <a href={link} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="mr-2 h-5 w-5" />Reservar pelo WhatsApp
+                  </a>
+                </Button>
+              )}
 
               <div className="mt-6 space-y-3 border-t border-border pt-6 text-sm">
                 <p className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 text-brand" />

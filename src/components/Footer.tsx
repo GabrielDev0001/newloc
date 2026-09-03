@@ -18,7 +18,8 @@ export function Footer() {
             <li><Link to="/aplicativo" className="hover:text-foreground">Carro para aplicativo</Link></li>
             <li><Link to="/frota" className="hover:text-foreground">Frota para empresas</Link></li>
             <li><Link to="/assinatura" className="hover:text-foreground">Carro por assinatura</Link></li>
-            <li><Link to="/diaria-mensal" className="hover:text-foreground">Diária e mensal</Link></li>
+            <li><Link to="/diaria" className="hover:text-foreground">Aluguel por diária</Link></li>
+            <li><Link to="/mensal" className="hover:text-foreground">Aluguel mensal</Link></li>
           </ul>
         </div>
         <div>

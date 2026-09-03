@@ -26,8 +26,16 @@ export type Car = {
   city: string;
   city_id: string | null;
   available: boolean;
+  coming_soon?: boolean | null;
   segment?: string;
 };
+
+/** Etiqueta de status do veículo no feed. null = disponível para reserva. */
+export function carStatusTag(car: { available: boolean; coming_soon?: boolean | null }) {
+  if (car.coming_soon) return "Breve";
+  if (!car.available) return "Indisponível";
+  return null;
+}
 
 const brl = (v: number) =>
   v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 2 });
@@ -39,7 +47,7 @@ export function CarCard({ car, period }: { car: Car; period?: CarPeriod }) {
   const link = buildWhatsappLink(
     `Olá! Quero alugar o ${car.name} (ou similar) por R$ ${price}/${shownPeriod}.`
   );
-
+  const statusTag = carStatusTag(car);
 
   return (
     <Card className="group flex flex-col overflow-hidden border-border/60 transition-all hover:-translate-y-1 hover:shadow-card">
@@ -52,7 +60,7 @@ export function CarCard({ car, period }: { car: Car; period?: CarPeriod }) {
           <img
             src={car.image_url}
             alt={car.name}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 ${statusTag ? "opacity-60 grayscale" : ""}`}
             loading="lazy"
           />
         ) : (
@@ -63,6 +71,15 @@ export function CarCard({ car, period }: { car: Car; period?: CarPeriod }) {
         <Badge className="absolute left-3 top-3 bg-brand-gradient text-brand-foreground border-0">
           {car.category}
         </Badge>
+        {statusTag && (
+          <Badge
+            className={`absolute right-3 top-3 border-0 ${
+              statusTag === "Breve" ? "bg-amber-500 text-white" : "bg-neutral-700 text-white"
+            }`}
+          >
+            {statusTag}
+          </Badge>
+        )}
       </Link>
 
       <div className="flex flex-1 flex-col gap-4 p-5">
@@ -109,9 +126,15 @@ export function CarCard({ car, period }: { car: Car; period?: CarPeriod }) {
               Detalhes <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
           </Button>
-          <Button asChild className="bg-brand-gradient text-brand-foreground hover:opacity-95">
-            <a href={link} target="_blank" rel="noopener noreferrer">Reservar</a>
-          </Button>
+          {statusTag ? (
+            <Button disabled className="bg-brand-gradient text-brand-foreground">
+              {statusTag === "Breve" ? "Em breve" : "Indisponível"}
+            </Button>
+          ) : (
+            <Button asChild className="bg-brand-gradient text-brand-foreground hover:opacity-95">
+              <a href={link} target="_blank" rel="noopener noreferrer">Reservar</a>
+            </Button>
+          )}
         </div>
       </div>
     </Card>

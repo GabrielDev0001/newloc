@@ -10,8 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as MensalRouteImport } from './routes/mensal'
 import { Route as FrotaRouteImport } from './routes/frota'
-import { Route as DiariaMensalRouteImport } from './routes/diaria-mensal'
+import { Route as DiariaRouteImport } from './routes/diaria'
 import { Route as ComoFuncionaRouteImport } from './routes/como-funciona'
 import { Route as AssinaturaRouteImport } from './routes/assinatura'
 import { Route as AplicativoRouteImport } from './routes/aplicativo'
@@ -20,12 +21,17 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CarrosIdRouteImport } from './routes/carros.$id'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as AuthenticatedAdminPropostasRouteImport } from './routes/_authenticated/admin.propostas'
-import { Route as AuthenticatedAdminCidadesRouteImport } from './routes/_authenticated/admin.cidades'
+import { Route as AuthenticatedAdminPropostasRouteImport } from './routes/_authenticated/admin_.propostas'
+import { Route as AuthenticatedAdminCidadesRouteImport } from './routes/_authenticated/admin_.cidades'
 
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MensalRoute = MensalRouteImport.update({
+  id: '/mensal',
+  path: '/mensal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FrotaRoute = FrotaRouteImport.update({
@@ -33,9 +39,9 @@ const FrotaRoute = FrotaRouteImport.update({
   path: '/frota',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DiariaMensalRoute = DiariaMensalRouteImport.update({
-  id: '/diaria-mensal',
-  path: '/diaria-mensal',
+const DiariaRoute = DiariaRouteImport.update({
+  id: '/diaria',
+  path: '/diaria',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComoFuncionaRoute = ComoFuncionaRouteImport.update({
@@ -79,15 +85,15 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
 } as any)
 const AuthenticatedAdminPropostasRoute =
   AuthenticatedAdminPropostasRouteImport.update({
-    id: '/propostas',
-    path: '/propostas',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    id: '/admin_/propostas',
+    path: '/admin/propostas',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminCidadesRoute =
   AuthenticatedAdminCidadesRouteImport.update({
-    id: '/cidades',
-    path: '/cidades',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    id: '/admin_/cidades',
+    path: '/admin/cidades',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -96,10 +102,11 @@ export interface FileRoutesByFullPath {
   '/aplicativo': typeof AplicativoRoute
   '/assinatura': typeof AssinaturaRoute
   '/como-funciona': typeof ComoFuncionaRoute
-  '/diaria-mensal': typeof DiariaMensalRoute
+  '/diaria': typeof DiariaRoute
   '/frota': typeof FrotaRoute
+  '/mensal': typeof MensalRoute
   '/sobre': typeof SobreRoute
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/admin': typeof AuthenticatedAdminRoute
   '/carros/$id': typeof CarrosIdRoute
   '/admin/cidades': typeof AuthenticatedAdminCidadesRoute
   '/admin/propostas': typeof AuthenticatedAdminPropostasRoute
@@ -110,10 +117,11 @@ export interface FileRoutesByTo {
   '/aplicativo': typeof AplicativoRoute
   '/assinatura': typeof AssinaturaRoute
   '/como-funciona': typeof ComoFuncionaRoute
-  '/diaria-mensal': typeof DiariaMensalRoute
+  '/diaria': typeof DiariaRoute
   '/frota': typeof FrotaRoute
+  '/mensal': typeof MensalRoute
   '/sobre': typeof SobreRoute
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/admin': typeof AuthenticatedAdminRoute
   '/carros/$id': typeof CarrosIdRoute
   '/admin/cidades': typeof AuthenticatedAdminCidadesRoute
   '/admin/propostas': typeof AuthenticatedAdminPropostasRoute
@@ -126,13 +134,14 @@ export interface FileRoutesById {
   '/aplicativo': typeof AplicativoRoute
   '/assinatura': typeof AssinaturaRoute
   '/como-funciona': typeof ComoFuncionaRoute
-  '/diaria-mensal': typeof DiariaMensalRoute
+  '/diaria': typeof DiariaRoute
   '/frota': typeof FrotaRoute
+  '/mensal': typeof MensalRoute
   '/sobre': typeof SobreRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/carros/$id': typeof CarrosIdRoute
-  '/_authenticated/admin/cidades': typeof AuthenticatedAdminCidadesRoute
-  '/_authenticated/admin/propostas': typeof AuthenticatedAdminPropostasRoute
+  '/_authenticated/admin_/cidades': typeof AuthenticatedAdminCidadesRoute
+  '/_authenticated/admin_/propostas': typeof AuthenticatedAdminPropostasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -142,8 +151,9 @@ export interface FileRouteTypes {
     | '/aplicativo'
     | '/assinatura'
     | '/como-funciona'
-    | '/diaria-mensal'
+    | '/diaria'
     | '/frota'
+    | '/mensal'
     | '/sobre'
     | '/admin'
     | '/carros/$id'
@@ -156,8 +166,9 @@ export interface FileRouteTypes {
     | '/aplicativo'
     | '/assinatura'
     | '/como-funciona'
-    | '/diaria-mensal'
+    | '/diaria'
     | '/frota'
+    | '/mensal'
     | '/sobre'
     | '/admin'
     | '/carros/$id'
@@ -171,13 +182,14 @@ export interface FileRouteTypes {
     | '/aplicativo'
     | '/assinatura'
     | '/como-funciona'
-    | '/diaria-mensal'
+    | '/diaria'
     | '/frota'
+    | '/mensal'
     | '/sobre'
     | '/_authenticated/admin'
     | '/carros/$id'
-    | '/_authenticated/admin/cidades'
-    | '/_authenticated/admin/propostas'
+    | '/_authenticated/admin_/cidades'
+    | '/_authenticated/admin_/propostas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -187,8 +199,9 @@ export interface RootRouteChildren {
   AplicativoRoute: typeof AplicativoRoute
   AssinaturaRoute: typeof AssinaturaRoute
   ComoFuncionaRoute: typeof ComoFuncionaRoute
-  DiariaMensalRoute: typeof DiariaMensalRoute
+  DiariaRoute: typeof DiariaRoute
   FrotaRoute: typeof FrotaRoute
+  MensalRoute: typeof MensalRoute
   SobreRoute: typeof SobreRoute
   CarrosIdRoute: typeof CarrosIdRoute
 }
@@ -202,6 +215,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mensal': {
+      id: '/mensal'
+      path: '/mensal'
+      fullPath: '/mensal'
+      preLoaderRoute: typeof MensalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/frota': {
       id: '/frota'
       path: '/frota'
@@ -209,11 +229,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FrotaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/diaria-mensal': {
-      id: '/diaria-mensal'
-      path: '/diaria-mensal'
-      fullPath: '/diaria-mensal'
-      preLoaderRoute: typeof DiariaMensalRouteImport
+    '/diaria': {
+      id: '/diaria'
+      path: '/diaria'
+      fullPath: '/diaria'
+      preLoaderRoute: typeof DiariaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/como-funciona': {
@@ -272,42 +292,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/propostas': {
-      id: '/_authenticated/admin/propostas'
-      path: '/propostas'
+    '/_authenticated/admin_/propostas': {
+      id: '/_authenticated/admin_/propostas'
+      path: '/admin/propostas'
       fullPath: '/admin/propostas'
       preLoaderRoute: typeof AuthenticatedAdminPropostasRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/cidades': {
-      id: '/_authenticated/admin/cidades'
-      path: '/cidades'
+    '/_authenticated/admin_/cidades': {
+      id: '/_authenticated/admin_/cidades'
+      path: '/admin/cidades'
       fullPath: '/admin/cidades'
       preLoaderRoute: typeof AuthenticatedAdminCidadesRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
-interface AuthenticatedAdminRouteChildren {
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedAdminCidadesRoute: typeof AuthenticatedAdminCidadesRoute
   AuthenticatedAdminPropostasRoute: typeof AuthenticatedAdminPropostasRoute
 }
 
-const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedAdminCidadesRoute: AuthenticatedAdminCidadesRoute,
   AuthenticatedAdminPropostasRoute: AuthenticatedAdminPropostasRoute,
-}
-
-const AuthenticatedAdminRouteWithChildren =
-  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
-
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
-}
-
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -320,8 +331,9 @@ const rootRouteChildren: RootRouteChildren = {
   AplicativoRoute: AplicativoRoute,
   AssinaturaRoute: AssinaturaRoute,
   ComoFuncionaRoute: ComoFuncionaRoute,
-  DiariaMensalRoute: DiariaMensalRoute,
+  DiariaRoute: DiariaRoute,
   FrotaRoute: FrotaRoute,
+  MensalRoute: MensalRoute,
   SobreRoute: SobreRoute,
   CarrosIdRoute: CarrosIdRoute,
 }

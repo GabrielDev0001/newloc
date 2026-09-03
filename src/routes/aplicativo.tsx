@@ -33,8 +33,8 @@ function AplicativoPage() {
       const { data, error } = await supabase
         .from("cars")
         .select("*")
-        .eq("available", true)
         .eq("segment", "aplicativo")
+        .order("available", { ascending: false })
         .order("price_weekly", { ascending: true });
       if (error) throw error;
       return data as Car[];

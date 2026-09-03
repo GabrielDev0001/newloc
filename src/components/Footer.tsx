@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BRAND } from "@/lib/constants";
+import { BRAND, buildWhatsappLink } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, CheckCircle2 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
@@ -18,6 +18,7 @@ export function Footer() {
             <li><Link to="/aplicativo" className="hover:text-foreground">Carro para aplicativo</Link></li>
             <li><Link to="/frota" className="hover:text-foreground">Frota para empresas</Link></li>
             <li><Link to="/assinatura" className="hover:text-foreground">Carro por assinatura</Link></li>
+            <li><Link to="/diaria-mensal" className="hover:text-foreground">Diária e mensal</Link></li>
           </ul>
         </div>
         <div>
@@ -35,7 +36,7 @@ export function Footer() {
           </div>
           <Button asChild className="mt-4 bg-[#25D366] text-white hover:bg-[#1fb958]">
             <a
-              href="https://wa.me/5531981199021?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Newloc%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
+              href={buildWhatsappLink("Olá! Vim pelo site da Newloc e gostaria de mais informações.")}
               target="_blank"
               rel="noopener noreferrer"
             >

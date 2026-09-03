@@ -197,7 +197,7 @@ function Index() {
                   },
                   {
                     q: "Como funciona a quilometragem?",
-                    a: "Cada plano tem uma franquia semanal generosa de quilômetros. Ao ver o carro, você confere exatamente quantos km estão inclusos.",
+                    a: "Cada plano tem uma franquia mensal generosa de quilômetros. Ao ver o carro, você confere exatamente quantos km estão inclusos.",
                   },
                   {
                     q: "E se eu quiser trocar de carro?",

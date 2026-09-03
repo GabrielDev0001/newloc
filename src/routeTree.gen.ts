@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as FrotaRouteImport } from './routes/frota'
+import { Route as DiariaMensalRouteImport } from './routes/diaria-mensal'
 import { Route as ComoFuncionaRouteImport } from './routes/como-funciona'
 import { Route as AssinaturaRouteImport } from './routes/assinatura'
 import { Route as AplicativoRouteImport } from './routes/aplicativo'
@@ -30,6 +31,11 @@ const SobreRoute = SobreRouteImport.update({
 const FrotaRoute = FrotaRouteImport.update({
   id: '/frota',
   path: '/frota',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiariaMensalRoute = DiariaMensalRouteImport.update({
+  id: '/diaria-mensal',
+  path: '/diaria-mensal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComoFuncionaRoute = ComoFuncionaRouteImport.update({
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/aplicativo': typeof AplicativoRoute
   '/assinatura': typeof AssinaturaRoute
   '/como-funciona': typeof ComoFuncionaRoute
+  '/diaria-mensal': typeof DiariaMensalRoute
   '/frota': typeof FrotaRoute
   '/sobre': typeof SobreRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/aplicativo': typeof AplicativoRoute
   '/assinatura': typeof AssinaturaRoute
   '/como-funciona': typeof ComoFuncionaRoute
+  '/diaria-mensal': typeof DiariaMensalRoute
   '/frota': typeof FrotaRoute
   '/sobre': typeof SobreRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/aplicativo': typeof AplicativoRoute
   '/assinatura': typeof AssinaturaRoute
   '/como-funciona': typeof ComoFuncionaRoute
+  '/diaria-mensal': typeof DiariaMensalRoute
   '/frota': typeof FrotaRoute
   '/sobre': typeof SobreRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/aplicativo'
     | '/assinatura'
     | '/como-funciona'
+    | '/diaria-mensal'
     | '/frota'
     | '/sobre'
     | '/admin'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/aplicativo'
     | '/assinatura'
     | '/como-funciona'
+    | '/diaria-mensal'
     | '/frota'
     | '/sobre'
     | '/admin'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/aplicativo'
     | '/assinatura'
     | '/como-funciona'
+    | '/diaria-mensal'
     | '/frota'
     | '/sobre'
     | '/_authenticated/admin'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   AplicativoRoute: typeof AplicativoRoute
   AssinaturaRoute: typeof AssinaturaRoute
   ComoFuncionaRoute: typeof ComoFuncionaRoute
+  DiariaMensalRoute: typeof DiariaMensalRoute
   FrotaRoute: typeof FrotaRoute
   SobreRoute: typeof SobreRoute
   CarrosIdRoute: typeof CarrosIdRoute
@@ -194,6 +207,13 @@ declare module '@tanstack/react-router' {
       path: '/frota'
       fullPath: '/frota'
       preLoaderRoute: typeof FrotaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/diaria-mensal': {
+      id: '/diaria-mensal'
+      path: '/diaria-mensal'
+      fullPath: '/diaria-mensal'
+      preLoaderRoute: typeof DiariaMensalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/como-funciona': {
@@ -300,6 +320,7 @@ const rootRouteChildren: RootRouteChildren = {
   AplicativoRoute: AplicativoRoute,
   AssinaturaRoute: AssinaturaRoute,
   ComoFuncionaRoute: ComoFuncionaRoute,
+  DiariaMensalRoute: DiariaMensalRoute,
   FrotaRoute: FrotaRoute,
   SobreRoute: SobreRoute,
   CarrosIdRoute: CarrosIdRoute,

@@ -1,6 +1,5 @@
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
-
-const WHATSAPP_URL = "https://wa.me/5531981199021";
+import { buildWhatsappLink } from "@/lib/constants";
 
 const DEFAULT_MESSAGE =
   "Olá! Vim pelo site da Newloc e gostaria de mais informações.";
@@ -8,7 +7,7 @@ const DEFAULT_MESSAGE =
 export function WhatsAppFloat() {
   return (
     <a
-      href={`${WHATSAPP_URL}?text=${encodeURIComponent(DEFAULT_MESSAGE)}`}
+      href={buildWhatsappLink(DEFAULT_MESSAGE)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar no WhatsApp"

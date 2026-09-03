@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, Loader2, Trash2, Mail, Phone } from "lucide-react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/admin/propostas")({
+export const Route = createFileRoute("/_authenticated/admin_/propostas")({
   head: () => ({ meta: [{ title: "Propostas — Newloc" }] }),
   component: Page,
 });

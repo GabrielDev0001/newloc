@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { Pencil, Trash2, Plus, ArrowLeft, Loader2 } from "lucide-react";
 
-export const Route = createFileRoute("/_authenticated/admin/cidades")({
+export const Route = createFileRoute("/_authenticated/admin_/cidades")({
   head: () => ({ meta: [{ title: "Cidades — Newloc Admin" }] }),
   component: CidadesPage,
 });

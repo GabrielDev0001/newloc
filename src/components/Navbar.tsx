@@ -10,10 +10,11 @@ const CLIENT_PORTAL_URL = "https://newloc.portalfleet.com.br/auth/login";
 import logoAsset from "@/assets/newloc-logo-white.png.asset.json";
 
 const navItems: { to: string; label: string }[] = [
-  { to: "/aplicativo", label: "Aplicativo" },
+  { to: "/diaria", label: "Diária" },
+  { to: "/mensal", label: "Mensal" },
   { to: "/frota", label: "Frota" },
   { to: "/assinatura", label: "Assinatura" },
-  { to: "/diaria-mensal", label: "Diária/Mensal" },
+  { to: "/aplicativo", label: "Aplicativo" },
   { to: "/sobre", label: "Sobre" },
   { to: "/como-funciona", label: "Atendimento" },
 ];

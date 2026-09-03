@@ -14,7 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import type { Car as CarType } from "@/components/CarCard";
+import { carStatusTag, type Car as CarType } from "@/components/CarCard";
 import { CAR_SEGMENTS, segmentOf, segmentPrice, type CarSegment } from "@/lib/constants";
 import { Pencil, Trash2, Plus, ArrowLeft, Loader2, Upload, Building2, Inbox } from "lucide-react";
 
@@ -29,7 +29,7 @@ type FormState = Partial<CarType> & { segment?: string };
 const empty: FormState = {
   name: "", group_code: "", category: "Hatch", description: "", image_url: "",
   price_weekly: 0, price_original: null, price_daily: null, km_included: 750, city: "São Paulo",
-  city_id: null, available: true, segment: "aplicativo",
+  city_id: null, available: true, coming_soon: false, segment: "aplicativo",
 };
 
 function AdminPage() {
@@ -107,6 +107,7 @@ function AdminPage() {
       city: selectedCity?.name ?? editing.city ?? "São Paulo",
       city_id: editing.city_id ?? null,
       available: editing.available ?? true,
+      coming_soon: editing.coming_soon ?? false,
       segment,
     };
     const { error } = editing.id
@@ -203,6 +204,14 @@ function AdminPage() {
                       </div>
                     )}
                     <div className="flex items-center gap-3 pt-6"><Switch checked={editing.available ?? true} onCheckedChange={(c) => setEditing({ ...editing, available: c })} /><Label>Disponível</Label></div>
+                    <div className="flex items-center gap-3 pt-6">
+                      <Switch checked={editing.coming_soon ?? false} onCheckedChange={(c) => setEditing({ ...editing, coming_soon: c })} />
+                      <Label>Em breve</Label>
+                    </div>
+                    <p className="text-xs text-muted-foreground sm:col-span-2">
+                      Veículos indisponíveis continuam aparecendo no feed, com a etiqueta
+                      "Indisponível". Marque "Em breve" para exibir a etiqueta "Breve" no lugar.
+                    </p>
                   </div>
 
                   <div>
@@ -287,7 +296,15 @@ function AdminPage() {
                       <div className="text-xs text-muted-foreground">/ {CAR_SEGMENTS[segmentOf(c.segment)].period}</div>
                     </TableCell>
                     <TableCell className="font-mono">{c.price_daily ? `R$ ${Number(c.price_daily).toFixed(2)}` : "—"}</TableCell>
-                    <TableCell>{c.available ? <Badge className="bg-green-100 text-green-700 hover:bg-green-100">Disponível</Badge> : <Badge variant="secondary">Indisponível</Badge>}</TableCell>
+                    <TableCell>
+                      {carStatusTag(c) === "Breve" ? (
+                        <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100">Breve</Badge>
+                      ) : carStatusTag(c) === "Indisponível" ? (
+                        <Badge variant="secondary">Indisponível</Badge>
+                      ) : (
+                        <Badge className="bg-green-100 text-green-700 hover:bg-green-100">Disponível</Badge>
+                      )}
+                    </TableCell>
                     <TableCell className="text-right">
                       <Button size="icon" variant="ghost" onClick={() => { setEditing(c); setOpen(true); }}><Pencil className="h-4 w-4" /></Button>
                       <Button size="icon" variant="ghost" onClick={() => remove(c.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>

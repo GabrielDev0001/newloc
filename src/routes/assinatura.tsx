@@ -3,7 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { CarCard, type Car } from "@/components/CarCard";
+import { CarCard, carStatusTag, type Car } from "@/components/CarCard";
+import { UsoParticularAlert } from "@/components/UsoParticularAlert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,7 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { BRAND } from "@/lib/constants";
-import { AlertTriangle, CalendarCheck, ShieldCheck, Wrench, CheckCircle2, Loader2 } from "lucide-react";
+import { CalendarCheck, ShieldCheck, Wrench, CheckCircle2, Loader2 } from "lucide-react";
 import { z } from "zod";
 
 export const Route = createFileRoute("/assinatura")({
@@ -59,8 +60,8 @@ function AssinaturaPage() {
       const { data, error } = await supabase
         .from("cars")
         .select("*")
-        .eq("available", true)
         .eq("segment", "assinatura")
+        .order("available", { ascending: false })
         .order("price_weekly", { ascending: true });
       if (error) throw error;
       return data as Car[];
@@ -115,14 +116,7 @@ function AssinaturaPage() {
                 Planos de 12 a 36 meses com manutenção, gestão de multas e documentação inclusos.
                 Você dirige, a Newloc cuida do resto.
               </p>
-              <div className="mt-6 flex items-start gap-3 rounded-xl border border-amber-300/60 bg-amber-50 p-4 text-sm text-amber-900">
-                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
-                <p>
-                  <strong>Atenção:</strong> a assinatura é para uso particular.
-                  Não é permitido utilizar o veículo para transporte de passageiros por aplicativo
-                  (Uber, 99, InDriver). Para esse uso, conheça nossos <a href="/aplicativo" className="underline">planos de aplicativo</a>.
-                </p>
-              </div>
+              <UsoParticularAlert className="mt-6" />
             </div>
           </div>
         </section>
@@ -220,7 +214,7 @@ function AssinaturaPage() {
                           <Select value={form.car_id || undefined} onValueChange={(v) => set("car_id", v)}>
                             <SelectTrigger><SelectValue placeholder="Selecione (opcional)" /></SelectTrigger>
                             <SelectContent>
-                              {cars.map((c) => <SelectItem key={c.id} value={c.id}>{c.name} — Grupo {c.group_code}</SelectItem>)}
+                              {cars.filter((c) => !carStatusTag(c)).map((c) => <SelectItem key={c.id} value={c.id}>{c.name} — Grupo {c.group_code}</SelectItem>)}
                             </SelectContent>
                           </Select>
                         </div>

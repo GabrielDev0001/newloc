@@ -13,6 +13,7 @@ const navItems: { to: string; label: string }[] = [
   { to: "/aplicativo", label: "Aplicativo" },
   { to: "/frota", label: "Frota" },
   { to: "/assinatura", label: "Assinatura" },
+  { to: "/diaria-mensal", label: "Diária/Mensal" },
   { to: "/sobre", label: "Sobre" },
   { to: "/como-funciona", label: "Atendimento" },
 ];

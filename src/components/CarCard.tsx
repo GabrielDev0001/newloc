@@ -3,7 +3,14 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "@tanstack/react-router";
 import { Gauge, Car as CarIcon, ArrowRight } from "lucide-react";
-import { buildWhatsappLink } from "@/lib/constants";
+import {
+  buildWhatsappLink,
+  CAR_SEGMENTS,
+  kmLabel,
+  segmentOf,
+  segmentPrice,
+  type CarPeriod,
+} from "@/lib/constants";
 
 export type Car = {
   id: string;
@@ -25,10 +32,12 @@ export type Car = {
 const brl = (v: number) =>
   v.toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 2 });
 
-export function CarCard({ car, period = "semana" }: { car: Car; period?: "semana" | "mês" }) {
-  const hasDiscount = car.price_original && Number(car.price_original) > Number(car.price_weekly);
+export function CarCard({ car, period }: { car: Car; period?: CarPeriod }) {
+  const shownPeriod = period ?? CAR_SEGMENTS[segmentOf(car.segment)].period;
+  const price = segmentPrice(car);
+  const hasDiscount = car.price_original && Number(car.price_original) > price;
   const link = buildWhatsappLink(
-    `Olá! Quero alugar o ${car.name} (ou similar) por R$ ${car.price_weekly}/${period}.`
+    `Olá! Quero alugar o ${car.name} (ou similar) por R$ ${price}/${shownPeriod}.`
   );
 
 
@@ -73,7 +82,7 @@ export function CarCard({ car, period = "semana" }: { car: Car; period?: "semana
         )}
 
         <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
-          <span className="inline-flex items-center gap-1"><Gauge className="h-3.5 w-3.5" />{car.km_included} km/mês</span>
+          <span className="inline-flex items-center gap-1"><Gauge className="h-3.5 w-3.5" />{kmLabel(car.km_included)}</span>
         </div>
 
 
@@ -83,10 +92,10 @@ export function CarCard({ car, period = "semana" }: { car: Car; period?: "semana
           )}
           <p className="text-xs text-muted-foreground">por</p>
           <p className="font-display text-3xl font-bold text-brand">
-            {brl(Number(car.price_weekly))}
-            <span className="text-sm font-normal text-muted-foreground"> / {period}</span>
+            {brl(price)}
+            <span className="text-sm font-normal text-muted-foreground"> / {shownPeriod}</span>
           </p>
-          {car.price_daily && period === "semana" ? (
+          {car.price_daily && shownPeriod === "semana" ? (
             <p className="mt-1 text-xs text-muted-foreground">
               ou {brl(Number(car.price_daily))} / diária
             </p>

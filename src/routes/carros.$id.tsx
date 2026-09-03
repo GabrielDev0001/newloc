@@ -5,13 +5,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { buildWhatsappLink, BRAND } from "@/lib/constants";
+import { buildWhatsappLink, BRAND, CAR_SEGMENTS, kmLabel, segmentOf, segmentPrice } from "@/lib/constants";
 import { ArrowLeft, Car as CarIcon, Gauge, MapPin, ShieldCheck, Wrench, Sparkles, Phone, MessageCircle, Loader2, Receipt } from "lucide-react";
 
 type CarDetail = {
   id: string; name: string; group_code: string; category: string;
   description: string | null; image_url: string | null;
-  price_weekly: number; price_original: number | null;
+  price_weekly: number; price_original: number | null; price_daily: number | null;
   km_included: number; city: string; available: boolean; segment: string;
   cities: { name: string; state: string; address: string | null; phone: string | null; hours: string | null } | null;
 };
@@ -51,9 +51,10 @@ function CarDetailPage() {
   if (error || !data) return null;
 
   const car = data;
-  const hasDiscount = car.price_original && Number(car.price_original) > Number(car.price_weekly);
-  const period = car.segment === "assinatura" ? "mês" : "semana";
-  const link = buildWhatsappLink(`Olá! Quero alugar o ${car.name} (Grupo ${car.group_code}) por R$ ${car.price_weekly}/${period}.`);
+  const price = segmentPrice(car);
+  const hasDiscount = car.price_original && Number(car.price_original) > price;
+  const period = CAR_SEGMENTS[segmentOf(car.segment)].period;
+  const link = buildWhatsappLink(`Olá! Quero alugar o ${car.name} (Grupo ${car.group_code}) por R$ ${price}/${period}.`);
 
   return (
     <div className="min-h-screen bg-background">
@@ -82,7 +83,7 @@ function CarDetailPage() {
 
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {[
-                { icon: Gauge, label: `${car.km_included} km/mês`, sub: "Franquia mensal" },
+                { icon: Gauge, label: kmLabel(car.km_included), sub: Number(car.km_included) > 0 ? "Franquia mensal" : "Quilometragem" },
                 { icon: Wrench, label: "Inclusa", sub: "Manutenção" },
                 { icon: Receipt, label: "Inclusa", sub: "Gestão de Multas" },
               ].map((f) => (
@@ -111,7 +112,7 @@ function CarDetailPage() {
               )}
               <p className="text-sm text-muted-foreground">a partir de</p>
               <p className="font-display text-4xl font-bold text-brand">
-                {brl(Number(car.price_weekly))}
+                {brl(price)}
                 <span className="text-base font-normal text-muted-foreground"> / {period}</span>
               </p>
 

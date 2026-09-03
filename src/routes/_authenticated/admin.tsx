@@ -15,6 +15,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import type { Car as CarType } from "@/components/CarCard";
+import { CAR_SEGMENTS, segmentOf, segmentPrice, type CarSegment } from "@/lib/constants";
 import { Pencil, Trash2, Plus, ArrowLeft, Loader2, Upload, Building2, Inbox } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -39,6 +40,11 @@ function AdminPage() {
   const [editing, setEditing] = useState<FormState>(empty);
   const [uploading, setUploading] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
+
+  const segment = segmentOf(editing.segment);
+  // Diária/Mensal: preço principal muda de campo conforme o segmento.
+  const isDaily = segment === "diaria";
+  const kmLivre = Number(editing.km_included ?? 0) === 0;
 
   useEffect(() => {
     if (!loading && !isAdmin) {
@@ -94,14 +100,14 @@ function AdminPage() {
       category: editing.category!,
       description: editing.description ?? null,
       image_url: editing.image_url || null,
-      price_weekly: Number(editing.price_weekly),
+      price_weekly: Number(editing.price_weekly) || 0,
       price_original: editing.price_original ? Number(editing.price_original) : null,
       price_daily: editing.price_daily ? Number(editing.price_daily) : null,
-      km_included: Number(editing.km_included),
+      km_included: Number(editing.km_included) || 0,
       city: selectedCity?.name ?? editing.city ?? "São Paulo",
       city_id: editing.city_id ?? null,
       available: editing.available ?? true,
-      segment: editing.segment ?? "aplicativo",
+      segment,
     };
     const { error } = editing.id
       ? await supabase.from("cars").update(payload).eq("id", editing.id)
@@ -149,7 +155,16 @@ function AdminPage() {
                 <form onSubmit={save} className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div><Label>Nome *</Label><Input required value={editing.name ?? ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })} placeholder="Volkswagen Polo" /></div>
-                    <div><Label>Preço diária (R$)</Label><Input type="number" step="0.01" value={editing.price_daily ?? ""} onChange={(e) => setEditing({ ...editing, price_daily: e.target.value ? Number(e.target.value) : null })} placeholder="99.00" /></div>
+                    <div><Label>Segmento *</Label>
+                      <Select value={segment} onValueChange={(v) => setEditing({ ...editing, segment: v })}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          {(Object.keys(CAR_SEGMENTS) as CarSegment[]).map((s) => (
+                            <SelectItem key={s} value={s}>{CAR_SEGMENTS[s].label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                     <div><Label>Categoria *</Label>
                       <Select value={editing.category ?? "Hatch"} onValueChange={(v) => setEditing({ ...editing, category: v })}>
                         <SelectTrigger><SelectValue /></SelectTrigger>
@@ -166,18 +181,27 @@ function AdminPage() {
                         </SelectContent>
                       </Select>
                     </div>
-                    <div><Label>Segmento *</Label>
-                      <Select value={editing.segment ?? "aplicativo"} onValueChange={(v) => setEditing({ ...editing, segment: v })}>
-                        <SelectTrigger><SelectValue /></SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="aplicativo">Aplicativo</SelectItem>
-                          <SelectItem value="assinatura">Assinatura</SelectItem>
-                        </SelectContent>
-                      </Select>
+                    <div><Label>{CAR_SEGMENTS[segment].priceLabel} *</Label>
+                      {isDaily ? (
+                        <Input type="number" step="0.01" required value={editing.price_daily ?? ""} onChange={(e) => setEditing({ ...editing, price_daily: e.target.value ? Number(e.target.value) : null })} placeholder="99.00" />
+                      ) : (
+                        <Input type="number" step="0.01" required value={editing.price_weekly ?? 0} onChange={(e) => setEditing({ ...editing, price_weekly: Number(e.target.value) })} />
+                      )}
                     </div>
-                    <div><Label>Preço semanal (R$) *</Label><Input type="number" step="0.01" required value={editing.price_weekly ?? 0} onChange={(e) => setEditing({ ...editing, price_weekly: Number(e.target.value) })} /></div>
                     <div><Label>Preço original (R$)</Label><Input type="number" step="0.01" value={editing.price_original ?? ""} onChange={(e) => setEditing({ ...editing, price_original: e.target.value ? Number(e.target.value) : null })} /></div>
-                    <div><Label>Km incluso/mês</Label><Input type="number" value={editing.km_included ?? 750} onChange={(e) => setEditing({ ...editing, km_included: Number(e.target.value) })} /></div>
+                    {segment === "aplicativo" && (
+                      <div><Label>Preço diária (R$)</Label><Input type="number" step="0.01" value={editing.price_daily ?? ""} onChange={(e) => setEditing({ ...editing, price_daily: e.target.value ? Number(e.target.value) : null })} placeholder="99.00" /></div>
+                    )}
+                    <div>
+                      <Label>Km incluso/mês</Label>
+                      <Input type="number" disabled={isDaily && kmLivre} value={isDaily && kmLivre ? "" : editing.km_included ?? 750} placeholder={isDaily && kmLivre ? "KM livre" : undefined} onChange={(e) => setEditing({ ...editing, km_included: Number(e.target.value) })} />
+                    </div>
+                    {isDaily && (
+                      <div className="flex items-center gap-3 pt-6">
+                        <Switch checked={kmLivre} onCheckedChange={(c) => setEditing({ ...editing, km_included: c ? 0 : 750 })} />
+                        <Label>KM Livre</Label>
+                      </div>
+                    )}
                     <div className="flex items-center gap-3 pt-6"><Switch checked={editing.available ?? true} onCheckedChange={(c) => setEditing({ ...editing, available: c })} /><Label>Disponível</Label></div>
                   </div>
 
@@ -233,7 +257,7 @@ function AdminPage() {
                   <TableHead>Carro</TableHead>
                   <TableHead>Segmento</TableHead>
                   <TableHead>Cidade</TableHead>
-                  <TableHead>Preço/sem</TableHead>
+                  <TableHead>Preço</TableHead>
                   <TableHead>Diária</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Ações</TableHead>
@@ -256,9 +280,12 @@ function AdminPage() {
                       )}
                     </TableCell>
                     <TableCell className="font-medium">{c.name}<div className="text-xs text-muted-foreground">{c.category}</div></TableCell>
-                    <TableCell><Badge variant={c.segment === "assinatura" ? "secondary" : "default"}>{c.segment ?? "aplicativo"}</Badge></TableCell>
+                    <TableCell><Badge variant={segmentOf(c.segment) === "aplicativo" ? "default" : "secondary"}>{CAR_SEGMENTS[segmentOf(c.segment)].label}</Badge></TableCell>
                     <TableCell>{c.city}</TableCell>
-                    <TableCell className="font-mono">R$ {Number(c.price_weekly).toFixed(2)}</TableCell>
+                    <TableCell className="font-mono">
+                      R$ {segmentPrice(c).toFixed(2)}
+                      <div className="text-xs text-muted-foreground">/ {CAR_SEGMENTS[segmentOf(c.segment)].period}</div>
+                    </TableCell>
                     <TableCell className="font-mono">{c.price_daily ? `R$ ${Number(c.price_daily).toFixed(2)}` : "—"}</TableCell>
                     <TableCell>{c.available ? <Badge className="bg-green-100 text-green-700 hover:bg-green-100">Disponível</Badge> : <Badge variant="secondary">Indisponível</Badge>}</TableCell>
                     <TableCell className="text-right">

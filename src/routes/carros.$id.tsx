@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { buildWhatsappLink, BRAND } from "@/lib/constants";
-import { ArrowLeft, Car as CarIcon, Gauge, MapPin, ShieldCheck, Wrench, Sparkles, Phone, MessageCircle, Loader2 } from "lucide-react";
+import { ArrowLeft, Car as CarIcon, Gauge, MapPin, ShieldCheck, Wrench, Sparkles, Phone, MessageCircle, Loader2, Receipt } from "lucide-react";
 
 type CarDetail = {
   id: string; name: string; group_code: string; category: string;
   description: string | null; image_url: string | null;
   price_weekly: number; price_original: number | null;
-  km_included: number; city: string; available: boolean;
+  km_included: number; city: string; available: boolean; segment: string;
   cities: { name: string; state: string; address: string | null; phone: string | null; hours: string | null } | null;
 };
 
@@ -52,7 +52,8 @@ function CarDetailPage() {
 
   const car = data;
   const hasDiscount = car.price_original && Number(car.price_original) > Number(car.price_weekly);
-  const link = buildWhatsappLink(`Olá! Quero alugar o ${car.name} (Grupo ${car.group_code}) por R$ ${car.price_weekly}/semana.`);
+  const period = car.segment === "assinatura" ? "mês" : "semana";
+  const link = buildWhatsappLink(`Olá! Quero alugar o ${car.name} (Grupo ${car.group_code}) por R$ ${car.price_weekly}/${period}.`);
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,7 +84,7 @@ function CarDetailPage() {
               {[
                 { icon: Gauge, label: `${car.km_included} km/mês`, sub: "Franquia mensal" },
                 { icon: Wrench, label: "Inclusa", sub: "Manutenção" },
-                { icon: ShieldCheck, label: "Completo", sub: "Seguro" },
+                { icon: Receipt, label: "Inclusa", sub: "Gestão de Multas" },
               ].map((f) => (
                 <Card key={f.sub} className="p-4">
                   <f.icon className="h-5 w-5 text-brand" />
@@ -96,7 +97,7 @@ function CarDetailPage() {
             <div className="mt-8">
               <h2 className="font-display text-2xl font-bold">O que está incluso</h2>
               <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-                {["Manutenção preventiva", "Troca de óleo e filtros", "Pneus e revisões", "Seguro auto completo", "Assistência 24h", "Documentação em dia"].map((i) => (
+                {["Manutenção preventiva", "Troca de óleo e filtros", "Pneus e revisões", "Gestão de multas", "Assistência 24h", "Documentação em dia"].map((i) => (
                   <li key={i} className="flex items-center gap-2 text-sm"><Sparkles className="h-4 w-4 text-brand" />{i}</li>
                 ))}
               </ul>
@@ -111,7 +112,7 @@ function CarDetailPage() {
               <p className="text-sm text-muted-foreground">a partir de</p>
               <p className="font-display text-4xl font-bold text-brand">
                 {brl(Number(car.price_weekly))}
-                <span className="text-base font-normal text-muted-foreground"> / semana</span>
+                <span className="text-base font-normal text-muted-foreground"> / {period}</span>
               </p>
 
               <Button asChild size="lg" className="mt-6 w-full bg-brand-gradient text-brand-foreground">

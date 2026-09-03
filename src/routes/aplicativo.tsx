@@ -14,7 +14,7 @@ export const Route = createFileRoute("/aplicativo")({
   head: () => ({
     meta: [
       { title: `Carro para aplicativo — ${BRAND.name}` },
-      { name: "description", content: "Aluguel semanal de carros para motoristas de Uber, 99 e InDriver. Manutenção, seguro e suporte 24h inclusos." },
+      { name: "description", content: "Aluguel semanal de carros para motoristas de Uber, 99 e InDriver. Manutenção, gestão de multas e suporte 24h inclusos." },
       { property: "og:title", content: `Carro para aplicativo — ${BRAND.name}` },
       { property: "og:description", content: "Frota nova, planos semanais e atendimento dedicado para motoristas de app." },
     ],
@@ -67,7 +67,7 @@ function AplicativoPage() {
               Rode hoje com o carro certo no seu app
             </h1>
             <p className="mt-4 max-w-xl text-white/80">
-              Planos semanais, manutenção e seguro inclusos. Compatível com Uber, 99 e InDriver.
+              Planos semanais, manutenção e gestão de multas inclusos. Compatível com Uber, 99 e InDriver.
             </p>
           </div>
         </section>

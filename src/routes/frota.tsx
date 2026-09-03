@@ -18,7 +18,7 @@ export const Route = createFileRoute("/frota")({
   head: () => ({
     meta: [
       { title: `Frota para empresas — ${BRAND.name}` },
-      { name: "description", content: "Locação de frota para empresas: utilitários e veículos leves com manutenção, seguro e gestão. Monte uma proposta sob medida." },
+      { name: "description", content: "Locação de frota para empresas: utilitários e veículos leves com manutenção, gestão de multas e gestão de frota. Monte uma proposta sob medida." },
       { property: "og:title", content: `Frota para empresas — ${BRAND.name}` },
       { property: "og:description", content: "Solução B2B de locação. Solicite uma proposta consultiva para sua operação." },
     ],
@@ -101,7 +101,7 @@ function FrotaPage() {
                 Frota sob medida para a sua operação
               </h1>
               <p className="mt-4 max-w-2xl text-muted-foreground md:text-lg">
-                Veículos leves e utilitários com manutenção, seguro e gestão integrada.
+                Veículos leves e utilitários com manutenção, gestão de multas e gestão integrada.
                 Monte uma proposta consultiva com a Newloc.
               </p>
             </div>
